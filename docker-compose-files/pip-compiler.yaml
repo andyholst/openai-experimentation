@@ -8,4 +8,4 @@ services:
       IN_REQUIREMENTS: "${IN_REQUIREMENTS}"
       SRC_APP: "${SRC_APP}"
     volumes:
-      - "../:/usr/src/app"
+      - "../src/${SRC_APP}:/usr/src/app"

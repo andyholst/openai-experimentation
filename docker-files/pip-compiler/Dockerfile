@@ -7,6 +7,6 @@ RUN pacman -Syu --noconfirm
 RUN pacman -S --noconfirm python-pip
 RUN pip install pip-tools
 
-WORKDIR "/usr/src/source"
+WORKDIR "/usr/src/app"
 
 CMD pip-compile --verbose --rebuild --upgrade "${IN_REQUIREMENTS}"
