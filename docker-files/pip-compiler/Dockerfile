@@ -9,4 +9,4 @@ RUN pip install pip-tools
 
 WORKDIR "/usr/src/source"
 
-CMD pip-compile --verbose --rebuild --no-index --no-header --upgrade "${IN_REQUIREMENTS}"
+CMD pip-compile --verbose --rebuild --upgrade "${IN_REQUIREMENTS}"

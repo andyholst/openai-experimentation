@@ -1,2 +1,9 @@
+DOCKER_COMPOSE_BINARY := docker-compose
+DOCKER_COMPOSE_PIP_COMPILER_FILE := docker-compose-files/pip-compiler.yaml
+
 build:
-	echo 'hello builder'
+	echo 'Hello builder'
+
+
+update-app-requirements:
+	@$(DOCKER_COMPOSE_BINARY) --file=(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --force-rm  pip-compiler
