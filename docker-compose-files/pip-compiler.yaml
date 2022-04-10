@@ -1,4 +1,4 @@
-version: "2.4"
+version: "3.4"
 
 services:
   pip-compiler:
@@ -6,6 +6,6 @@ services:
       context: ../docker-files/pip-compiler
     environment:
       IN_REQUIREMENTS: "${IN_REQUIREMENTS}"
-      SRC_DIR: "${SRC_DIR}"
+      SRC_APP: "${SRC_APP}"
     volumes:
-      - "../src/${SRC_DIR}:/usr/src/source"
+      - "../:/usr/src/app"
