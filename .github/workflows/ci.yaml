@@ -13,6 +13,6 @@ jobs:
       - name: update hello-world python dependencies
         env:
           BUILD_ARGUMENT: "update-app-requirements"
-          IN_REQUIREMENTS: "${IN_REQUIREMENTS}"
-          SRC_APP: "${SRC_APP}"
-        run: make update-app-requirements
+          IN_REQUIREMENTS: "requirements.in"
+          SRC_APP: "hello-world"
+        run: make "${BUILD_ARGUMENT}"
