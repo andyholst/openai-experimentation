@@ -8,7 +8,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: compile
+      - name: install dependencies
+        run: sudo apt-get install -y build-essential
+      - name: update hello-world python dependencies
         env:
-          BUILD_ARGUMENT: "build"
-        run: docker-compose -f docker-compose-files/builder.yaml run arch-builder
+          BUILD_ARGUMENT: "update-app-requirements"
+          IN_REQUIREMENTS: "requirements.in"
+          SRC_APP: "hello-world"
+        run: make "${BUILD_ARGUMENT}"
