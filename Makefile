@@ -6,4 +6,4 @@ build:
 
 
 update-app-requirements:
-	@$(DOCKER_COMPOSE_BINARY) --file=(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --force-rm  pip-compiler
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm  pip-compiler

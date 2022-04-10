@@ -6,6 +6,8 @@ services:
       context: ../docker-files/arch-builder
     environment:
       BUILD_ARGUMENT: "${BUILD_ARGUMENT}"
+      IN_REQUIREMENTS: "${IN_REQUIREMENTS}"
+      SRC_DIR: "${SRC_DIR}"
     volumes:
       - "../:/usr/src/source"
       - "/var/run/docker.sock:/var/run/docker.sock"
