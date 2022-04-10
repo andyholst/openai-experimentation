@@ -6,5 +6,6 @@ services:
       context: ../docker-files/pip-compiler
     environment:
       IN_REQUIREMENTS: "${IN_REQUIREMENTS}"
+      SRC_DIR: "${SRC_DIR}"
     volumes:
-      - "../src:/usr/src/source"
+      - "../src/${SRC_DIR}:/usr/src/source"
