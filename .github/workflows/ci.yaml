@@ -15,4 +15,4 @@ jobs:
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "${IN_REQUIREMENTS}"
           SRC_APP: "${SRC_APP}"
-        run: docker-compose -f docker-compose-files/pip-compiler.yaml run --rm pip-compiler
+        run: make update-app-requirements
