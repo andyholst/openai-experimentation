@@ -1,0 +1,10 @@
+version: "2.4"
+
+services:
+  pip-compiler:
+    build:
+      context: ../docker-files/pip-compiler
+    environment:
+      IN_REQUIREMENTS: "${IN_REQUIREMENTS}"
+    volumes:
+      - "../:/usr/src/source"
