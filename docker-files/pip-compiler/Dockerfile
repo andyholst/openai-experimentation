@@ -4,8 +4,9 @@ RUN pacman-key --init
 
 RUN pacman -Syu --noconfirm
 
-RUN pacman -S --noconfirm make docker docker-compose
+RUN pacman -S --noconfirm python-pip
+RUN pip install pip-tools
 
 WORKDIR "/usr/src/source"
 
-CMD make "${BUILD_ARGUMENT}"
+CMD pip-compile "${IN_REQUIREMENTS}"

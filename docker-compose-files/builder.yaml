@@ -8,3 +8,4 @@ services:
       BUILD_ARGUMENT: "${BUILD_ARGUMENT}"
     volumes:
       - "../:/usr/src/source"
+      - "/var/run/docker.sock:/var/run/docker.sock"
