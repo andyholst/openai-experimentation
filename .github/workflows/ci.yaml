@@ -20,7 +20,7 @@ jobs:
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/hello-world"
         run: make "${BUILD_ARGUMENT}"
-      - name: Update unit test Python dependencies
+      - name: Update unit tests Python dependencies
         env:
           BUILD_ARGUMENT: "update-unit-tests-requirements"
           IN_REQUIREMENTS: "requirements.in"
