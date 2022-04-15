@@ -1,0 +1,17 @@
+version: "3.4"
+
+services:
+  unit-tests:
+    build:
+      context: ../tests/unit-tests
+    environment:
+      PYTHONPATH: "src"
+      PYTEST_ADDOPTS: "${PYTEST_ADDOPTS:-}"
+      SRC_APP: "${SRC_APP}"
+    volumes:
+      - "../${SRC_APP}:/usr/src/unit-tests/${SRC_APP}"
+      - "../tests/unit-tests:/usr/src/unit-tests"
+    command: >
+      --cov=src
+      --cov-config=coverage.cfg
+      --cov-report=term-missing
