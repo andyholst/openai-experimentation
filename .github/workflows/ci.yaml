@@ -13,6 +13,7 @@ jobs:
       - name: Validate Docker-Compose files
         env:
           BUILD_ARGUMENT: "validate-docker-compose-files"
+          SRC_APP: "src/test"
         run: make "${BUILD_ARGUMENT}"
       - name: Update hello-world Python dependencies
         env:
