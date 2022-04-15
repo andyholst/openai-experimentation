@@ -5,8 +5,9 @@ services:
     build:
       context: ../tests/unit-tests
     environment:
-      PYTHONPATH: "src"
+      IN_REQUIREMENTS: "${IN_REQUIREMENTS:-requirements.in}"
       PYTEST_ADDOPTS: "${PYTEST_ADDOPTS:-}"
+      PYTHONPATH: "src"
       SRC_APP: "${SRC_APP}"
     volumes:
       - "../${SRC_APP}:/usr/src/unit-tests/${SRC_APP}"
