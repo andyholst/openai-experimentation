@@ -5,7 +5,7 @@ services:
     build:
       context: ../docker-files/pip-compiler
     environment:
-      IN_REQUIREMENTS: "${IN_REQUIREMENTS}"
+      IN_REQUIREMENTS: "${IN_REQUIREMENTS:-requirements.in}"
       SRC_APP: "${SRC_APP}"
     volumes:
-      - "../src/${SRC_APP}:/usr/src/app"
+      - "../${SRC_APP}:/usr/src/app"
