@@ -6,4 +6,4 @@ def test_main():
 
 
 def test_name():
-    assert print_main() is not None
+    assert print_main() is None
