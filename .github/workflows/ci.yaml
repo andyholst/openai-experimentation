@@ -35,6 +35,7 @@ jobs:
         run: make "${BUILD_ARGUMENT}"
       - name: Build Python demo application
         env:
+          APP_NAME: "demo-hello-world"
           BUILD_ARGUMENT: "build-app"
           SRC_APP: "src/demo"
         run: make "${BUILD_ARGUMENT}"

@@ -1,6 +1,7 @@
 version: "3.4"
 
 services:
-  build:
+  app:
+    image: "${APP_NAME}:${VERSION}"
     build:
       context: "../${SRC_APP}"

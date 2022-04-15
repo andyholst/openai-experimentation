@@ -10,7 +10,7 @@ RUN pip wheel --requirement /tmp/requirements.txt \
 FROM python:3.9.12-slim-buster
 
 COPY --from=builder /wheelhouse /wheelhouse
-COPY --from=builder ./requirements.txt /tmp/requirements.txt
+COPY --from=builder /tmp/requirements.txt /tmp/requirements.txt
 
 RUN pip install --no-index --find-links=/wheelhouse --quiet -r /tmp/requirements.txt
 
