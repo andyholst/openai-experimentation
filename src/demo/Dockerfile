@@ -17,4 +17,4 @@ RUN pip install --no-index --find-links=/wheelhouse --quiet -r /tmp/requirements
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-CMD ["python", "demo/hello_world.py"]
+CMD ["python", "hello_world/hello_world.py"]

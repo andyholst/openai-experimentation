@@ -25,3 +25,6 @@ update-app-requirements:
 
 build-app:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build --force-rm --no-cache
+
+run-app:
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) run --rm app
