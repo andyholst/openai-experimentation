@@ -20,13 +20,19 @@ jobs:
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
-        run: make "${BUILD_ARGUMENT}"
+        run: rm "${SRC_APP}/requirements.txt" && make "${BUILD_ARGUMENT}"
       - name: Update unit tests Python dependencies
         env:
           BUILD_ARGUMENT: "update-unit-tests-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "tests/unit-tests"
-        run: make "${BUILD_ARGUMENT}"
+        run: rm "${SRC_APP}/requirements.txt" && make "${BUILD_ARGUMENT}"
+      - name: Update integration tests Python dependencies
+        env:
+          BUILD_ARGUMENT: "update-integration-tests-requirements"
+          IN_REQUIREMENTS: "requirements.in"
+          SRC_APP: "tests/integration-tests"
+        run: rm "${SRC_APP}/requirements.txt" && make "${BUILD_ARGUMENT}"
       - name: Run unit tests
         env:
           BUILD_ARGUMENT: "unit-tests"
@@ -44,4 +50,10 @@ jobs:
           APP_NAME: "demo-hello-world"
           BUILD_ARGUMENT: "run-app"
           SRC_APP: "src/demo"
+        run: make "${BUILD_ARGUMENT}"
+      - name: Run integration tests
+        env:
+          APP_NAME: "demo-hello-world"
+          BUILD_ARGUMENT: "integration-tests"
+          IN_REQUIREMENTS: "requirements.in"
         run: make "${BUILD_ARGUMENT}"
