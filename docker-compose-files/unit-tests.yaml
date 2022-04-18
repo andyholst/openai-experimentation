@@ -3,7 +3,7 @@ version: "3.4"
 services:
   unit-tests:
     build:
-      context: ../tests/unit-tests
+      context: "../tests/unit-tests"
     environment:
       IN_REQUIREMENTS: "${IN_REQUIREMENTS:-requirements.in}"
       PYTEST_ADDOPTS: "${PYTEST_ADDOPTS:-}"
