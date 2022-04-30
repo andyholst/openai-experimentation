@@ -15,7 +15,7 @@ jobs:
           BUILD_ARGUMENT: "validate-docker-compose-files"
           SRC_APP: "src/demo"
         run: make "${BUILD_ARGUMENT}"
-      - name: Update hello-world Python dependencies
+      - name: Update ai-learns-playing-sonic Python dependencies
         env:
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
@@ -37,23 +37,23 @@ jobs:
         env:
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
-          SRC_APP: "src/demo/hello_world"
+          SRC_APP: "src/demo/ai_learns_playing_sonic"
         run: make "${BUILD_ARGUMENT}"
       - name: Build Python demo application
         env:
-          APP_NAME: "demo-hello-world"
+          APP_NAME: "demo-ai-learns-playing-sonic"
           BUILD_ARGUMENT: "build-app"
           SRC_APP: "src/demo"
         run: make "${BUILD_ARGUMENT}"
       - name: Run Python demo application
         env:
-          APP_NAME: "demo-hello-world"
+          APP_NAME: "demo-ai-learns-playing-sonic"
           BUILD_ARGUMENT: "run-app"
           SRC_APP: "src/demo"
         run: make "${BUILD_ARGUMENT}"
       - name: Run integration tests
         env:
-          APP_NAME: "demo-hello-world"
+          APP_NAME: "demo-ai-learns-playing-sonic"
           BUILD_ARGUMENT: "integration-tests"
           IN_REQUIREMENTS: "requirements.in"
         run: make "${BUILD_ARGUMENT}"

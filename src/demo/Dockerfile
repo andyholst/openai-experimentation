@@ -17,4 +17,4 @@ RUN pip install --no-index --find-links=/wheelhouse --quiet -r /tmp/requirements
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-CMD ["python", "hello_world/hello_world.py"]
+CMD ["python", "ai_learns_playing_sonic/ai_learns_playing_sonic.py"]
