@@ -1,1 +1,2 @@
 gym-retro==0.8.*
+pygame==2.1.*
