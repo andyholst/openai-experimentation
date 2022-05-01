@@ -17,7 +17,7 @@ RUN apt-get -y install cmake python3-pip python3-dev build-essential zlib1g-dev 
 COPY --from=builder /wheelhouse /wheelhouse
 COPY --from=builder /tmp/requirements.txt /tmp/requirements.txt
 
-RUN pip install --no-index --find-links=/wheelhouse --quiet -r /tmp/requirements.txt
+RUN pip install --no-index --find-links=/wheelhouse -r /tmp/requirements.txt
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
