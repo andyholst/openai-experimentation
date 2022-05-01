@@ -8,12 +8,12 @@ def about_to_play_sonic():
 def main():
     about_to_play_sonic()
     env = retro.make(game="SonicTheHedgehog-Genesis", state="GreenHillZone.Act1")
-    obs = env.reset()
+    env.reset()
     while True:
         obs, rew, done, info = env.step(env.action_space.sample())
         env.render()
         if done:
-            obs = env.reset()
+            env.reset()
     env.close()
 
 
