@@ -44,7 +44,7 @@ flake8==3.9.2
     # via -r requirements.in
 flatbuffers==2.0
     # via tensorflow
-gast==0.5.3
+gast==0.4.0
     # via tensorflow
 glfw==2.5.3
     # via mujoco-py
@@ -82,7 +82,7 @@ joblib==1.1.0
     # via
     #   -r requirements.in
     #   baselines
-keras==2.8.0
+keras==2.7.0
     # via tensorflow
 keras-preprocessing==1.1.2
     # via tensorflow
@@ -186,21 +186,21 @@ six==1.16.0
     #   keras-preprocessing
     #   python-dateutil
     #   tensorflow
-tensorboard==2.8.0
+tensorboard==2.9.0
     # via tensorflow
 tensorboard-data-server==0.6.1
     # via tensorboard
 tensorboard-plugin-wit==1.8.1
     # via tensorboard
-tensorflow==2.8.0
+tensorflow==2.7.1
     # via
     #   -r requirements.in
     #   baselines
+tensorflow-estimator==2.7.0
+    # via tensorflow
 tensorflow-io-gcs-filesystem==0.25.0
     # via tensorflow
 termcolor==1.1.0
-    # via tensorflow
-tf-estimator-nightly==2.8.0.dev2021122109
     # via tensorflow
 tqdm==4.64.0
     # via baselines
@@ -215,6 +215,7 @@ wheel==0.37.1
     #   astunparse
     #   scikit-build
     #   tensorboard
+    #   tensorflow
 wrapt==1.14.0
     # via tensorflow
 zipp==3.8.0
