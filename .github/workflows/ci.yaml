@@ -49,7 +49,7 @@ jobs:
         env:
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
-          SRC_APP: "src/demo/ai_learns_playing_sonic"
+          SRC_APP: "src/demo"
         run: make "${BUILD_ARGUMENT}"
       - name: Build Python demo application
         env:
