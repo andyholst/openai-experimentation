@@ -24,4 +24,4 @@ RUN pip3 install --no-index --find-links=/wheelhouse --quiet -r /tmp/requirement
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-CMD ["python", "ai_learns_playing_sonic/ai_learns_playing_sonic.py"]
+CMD ["python3", "ai_learns_playing_sonic/ai_learns_playing_sonic.py"]
