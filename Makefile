@@ -7,10 +7,8 @@ DOCKER_COMPOSE_BUILD_APP_FILE := $(DOCKER_COMPOSE_FILES)/build-app.yaml
 
 export VERSION := $(shell git rev-parse --short HEAD)
 
-validate-docker-compose-files: $(DOCKER_COMPOSE_FILES)/*
-	for file in $^ ; do \
-		$(DOCKER_COMPOSE_BINARY) --file="$${file}" config > /dev/null || exit $?; \
-	done
+validate-docker-compose-files:
+	$(foreach file, $(wildcard $(DOCKER_COMPOSE_FILES)/*.yaml), $(DOCKER_COMPOSE_BINARY) --file="${file}" config > /dev/null || exit $?;)
 
 build-unit-tests:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_UNIT_TEST_FILE) build unit-tests
