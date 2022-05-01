@@ -15,6 +15,12 @@ jobs:
           BUILD_ARGUMENT: "validate-docker-compose-files"
           SRC_APP: "src/demo"
         run: make "${BUILD_ARGUMENT}"
+      - name: Build OpenAI environment
+        env:
+          APP_NAME: "openai"
+          BUILD_ARGUMENT: "build-app"
+          SRC_APP: "docker-files/openai-environment"
+        run: make "${BUILD_ARGUMENT}"
       - name: Update ai-learns-playing-sonic Python dependencies
         env:
           BUILD_ARGUMENT: "update-app-requirements"
