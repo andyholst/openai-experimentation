@@ -1,7 +1,1 @@
-scikit-build
-opencv-python
-anyrl
-gym
-joblib
-atari-py
-tensorflow
+gym-retro==0.8.*
