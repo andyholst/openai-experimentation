@@ -4,6 +4,7 @@ import retro
 def about_to_play_sonic():
     return "You rock Sonic!"
 
+
 def main():
     about_to_play_sonic()
     env = retro.make(game="SonicTheHedgehog-Genesis", state="GreenHillZone.Act1")
