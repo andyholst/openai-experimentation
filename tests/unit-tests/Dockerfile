@@ -1,25 +1,23 @@
-FROM ubuntu:22.04 as builder
+FROM python:3.8.13-buster as builder
 
 RUN apt-get update
-RUN apt-get --assume-yes install cmake python3 python3-pip git zlib1g-dev libopenmpi-dev ffmpeg
-RUN apt-get update
+RUN apt-get -y install cmake zlib1g-dev libopenmpi-dev ffmpeg
 
 COPY requirements.txt /tmp/requirements.txt
-RUN pip3 wheel --requirement /tmp/requirements.txt \
+RUN pip wheel --requirement /tmp/requirements.txt \
               --wheel-dir /wheelhouse \
               --disable-pip-version-check \
               --quiet
 
-FROM ubuntu:22.04
+FROM python:3.8.13-buster
 
 RUN apt-get update
-RUN apt-get --assume-yes install cmake python3 python3-pip git zlib1g-dev libopenmpi-dev ffmpeg
-RUN apt-get update
+RUN apt-get -y install cmake zlib1g-dev libopenmpi-dev ffmpeg
 
 COPY --from=builder /wheelhouse /wheelhouse
 COPY --from=builder /tmp /tmp
 
-RUN pip3 install --find-links /wheelhouse \
+RUN pip install --find-links /wheelhouse \
                 --no-index \
                 --requirement /tmp/requirements.txt \
                 --disable-pip-version-check \
