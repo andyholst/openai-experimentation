@@ -1,13 +1,5 @@
-from demo.ai_learns_playing_sonic.ai_learns_playing_sonic import main, ai_learns_playing_sonic
-
-import retro
-
-env = retro.make(game="SonicTheHedgehog-Genesis", state="GreenHillZone.Act1")
+from demo.ai_learns_playing_sonic.ai_learns_playing_sonic import about_to_play_sonic
 
 
-def test_main():
-    assert main() == 'Hello Sonic, here I come!'
-
-
-def test_name():
-    assert ai_learns_playing_sonic() is None
+def test_about_to_play_sonic():
+    assert about_to_play_sonic() == 'You rock Sonic!'
