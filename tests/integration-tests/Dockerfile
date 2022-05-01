@@ -3,7 +3,7 @@ FROM python:3.9.12-slim-buster as builder
 COPY requirements.txt /tmp/requirements.txt
 RUN pip wheel --requirement /tmp/requirements.txt \
               --wheel-dir /wheelhouse \
-              --disable-pip-version-check \
+              --disable-pip-version-check
 
 FROM python:3.9.12-slim-buster
 
@@ -13,7 +13,7 @@ COPY --from=builder /tmp /tmp
 RUN pip install --find-links /wheelhouse \
                 --no-index \
                 --requirement /tmp/requirements.txt \
-                --disable-pip-version-check \
+                --disable-pip-version-check
 
 WORKDIR /usr/src/integration-tests
 
