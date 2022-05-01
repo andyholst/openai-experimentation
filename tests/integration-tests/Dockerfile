@@ -1,4 +1,4 @@
-FROM python:3.9.12-slim-buster as builder
+FROM python:3.7.13-slim-buster as builder
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip wheel --requirement /tmp/requirements.txt \
@@ -6,7 +6,7 @@ RUN pip wheel --requirement /tmp/requirements.txt \
               --disable-pip-version-check \
               --quiet
 
-FROM python:3.9.12-slim-buster
+FROM python:3.7.13-slim-buster
 
 COPY --from=builder /wheelhouse /wheelhouse
 COPY --from=builder /tmp /tmp

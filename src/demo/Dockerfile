@@ -1,5 +1,5 @@
 ARG VERSION="${VERSION}"
-FROM python:3.8.13-buster as builder
+FROM python:3.7.13-buster as builder
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip wheel --requirement /tmp/requirements.txt \
