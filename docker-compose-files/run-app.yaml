@@ -8,5 +8,5 @@ services:
     group_add:
       - "video"
     volumes:
-      - "${ROM_PATH}:/tmp/roms"
+      - "./roms:/tmp/roms"
       - "/tmp/.X11-unix:/tmp/.X11-unix"
