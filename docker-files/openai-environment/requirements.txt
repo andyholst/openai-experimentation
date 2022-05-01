@@ -12,7 +12,7 @@ gym==0.23.1
     #   gym-retro
 gym-notices==0.0.6
     # via gym
-gym-retro==0.8.0
+gym-retro==0.7.1
     # via -r requirements.in
 importlib-metadata==4.11.3
     # via gym
@@ -21,8 +21,6 @@ numpy==1.22.3
 pygame==2.1.2
     # via -r requirements.in
 pyglet==1.5.23
-    # via
-    #   -r requirements.in
-    #   gym-retro
+    # via gym-retro
 zipp==3.8.0
     # via importlib-metadata
