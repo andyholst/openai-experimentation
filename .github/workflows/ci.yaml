@@ -62,8 +62,8 @@ jobs:
           APP_NAME: "demo-ai-learns-playing-sonic"
           BUILD_ARGUMENT: "run-app"
           SRC_APP: "src/demo"
-          ROM_PATH: ".steam/steam/steamapps/common/sega_classics/uncompressed_roms"
-        run: mkdir -p ".steam/steam/steamapps/common/sega_classics/uncompressed_roms" && make "${BUILD_ARGUMENT}"
+          ROM_PATH: "roms"
+        run: make "${BUILD_ARGUMENT}"
       - name: Run integration tests
         env:
           APP_NAME: "demo-ai-learns-playing-sonic"
