@@ -28,6 +28,9 @@ update-unit-tests-requirements:
 update-integration-tests-requirements:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm pip-compiler
 
+update-openai-requirements:
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm  pip-compiler
+
 update-app-requirements:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm  pip-compiler
 
