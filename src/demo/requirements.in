@@ -1,1 +1,8 @@
 flake8
+scikit-build
+opencv-python
+anyrl
+gym
+joblib
+atari-py
+tensorflow
