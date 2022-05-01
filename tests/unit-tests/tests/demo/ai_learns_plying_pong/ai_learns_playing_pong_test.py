@@ -1,6 +1,2 @@
-def test_main():
-    assert main() == 'Hello Sonic, here I come!'
-
-
-def test_name():
+def test_pong():
     assert ai_learns_playing_sonic() is None
