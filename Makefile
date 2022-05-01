@@ -13,7 +13,7 @@ validate-docker-compose-files:
 	$(DOCKER_COMPOSE_BINARY) --file="${file}" config > /dev/null || exit $?;)
 
 build-unit-tests:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_UNIT_TEST_FILE) build unit-tests
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_UNIT_TEST_FILE) build unit-tests --build-arg "VERSION=${VERSION}"
 
 unit-tests: build-unit-tests
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_UNIT_TEST_FILE) run --rm unit-tests
