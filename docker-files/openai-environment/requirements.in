@@ -1,0 +1,11 @@
+flake8==3.*
+scikit-build==0.14.*
+opencv-python==4.5.5.*
+anyrl==0.12.23
+baselines==0.1.*
+gym==0.10.*
+gym-retro==0.7.*
+joblib==1.1.*
+atari-py==0.2.*
+tensorflow==2.8.*
+
