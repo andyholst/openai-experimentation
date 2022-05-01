@@ -8,7 +8,7 @@ RUN pip wheel --requirement /tmp/requirements.txt \
               --wheel-dir /wheelhouse \
               --disable-pip-version-check
 
-FROM python:3.8.13-buster
+FROM openai:${VERSION}
 
 RUN apt-get update
 RUN apt-get -y install cmake python3-pip python3-dev build-essential zlib1g-dev libopenmpi-dev ffmpeg
