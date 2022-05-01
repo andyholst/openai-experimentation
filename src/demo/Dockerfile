@@ -19,7 +19,7 @@ RUN apt-get update
 COPY --from=builder /wheelhouse /wheelhouse
 COPY --from=builder /tmp/requirements.txt /tmp/requirements.txt
 
-RUN pip install --no-index --find-links=/wheelhouse --quiet -r /tmp/requirements.txt
+RUN pip3 install --no-index --find-links=/wheelhouse --quiet -r /tmp/requirements.txt
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
