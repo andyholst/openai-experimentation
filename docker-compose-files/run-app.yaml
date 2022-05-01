@@ -5,8 +5,6 @@ services:
     image: "${APP_NAME}:${VERSION}"
     environment:
       DISPLAY: "$DISPLAY"
-    devices:
-      - "/dev/dri"
     group_add:
       - "video"
     volumes:
