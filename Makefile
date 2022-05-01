@@ -41,4 +41,4 @@ build-app:
 	--build-arg "VERSION=${VERSION}"
 
 run-app:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run --rm -ti app /bin/bash
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run --rm app
