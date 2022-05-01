@@ -1,14 +1,16 @@
 import retro
 
-env = retro.make(game = "SonicTheHedgehog-Genesis", state = "GreenHillZone.Act1")
 
 def main():
-    return "Hello Sonic, here I come!"
-
-
-def ai_learns_playing_sonic():
-    print(main())
+    env = retro.make(game="SonicTheHedgehog-Genesis", state="GreenHillZone.Act1")
+    obs = env.reset()
+    while True:
+        obs, rew, done, info = env.step(env.action_space.sample())
+        env.render()
+        if done:
+            obs = env.reset()
+    env.close()
 
 
 if __name__ == "__main__":
-    ai_learns_playing_sonic()
+    main()
