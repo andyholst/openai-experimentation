@@ -7,7 +7,9 @@
 cloudpickle==2.0.0
     # via gym
 gym==0.23.1
-    # via gym-retro
+    # via
+    #   -r requirements.in
+    #   gym-retro
 gym-notices==0.0.6
     # via gym
 gym-retro==0.8.0
