@@ -21,6 +21,8 @@ numpy==1.22.3
 pygame==2.1.2
     # via -r requirements.in
 pyglet==1.5.23
-    # via gym-retro
+    # via
+    #   -r requirements.in
+    #   gym-retro
 zipp==3.8.0
     # via importlib-metadata
