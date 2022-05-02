@@ -62,8 +62,6 @@ jobs:
           APP_NAME: "demo-ai-learns-playing-sonic"
           BUILD_ARGUMENT: "run-app"
           SRC_APP: "src/demo"
-          EXTRA_ARGUMENTS: "--name=openai"
-          OVERRIDE_COMMAND: "bash -c 'python /usr/src/app/ai_learns_playing_sonic/ai_learns_playing_sonic.py'"
         run: make "${BUILD_ARGUMENT}"
       - name: Run integration tests
         env:
