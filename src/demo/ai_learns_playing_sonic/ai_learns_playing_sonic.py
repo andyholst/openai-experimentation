@@ -18,4 +18,4 @@ def main():
 
 
 if __name__ == "__main__":
-    about_to_play_sonic()
+    print(about_to_play_sonic())
