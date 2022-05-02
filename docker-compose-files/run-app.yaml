@@ -1,0 +1,12 @@
+version: "2.4"
+
+services:
+  app:
+    image: "${APP_NAME}:${VERSION}"
+    environment:
+      DISPLAY: "$DISPLAY"
+    group_add:
+      - "video"
+    volumes:
+      - "../roms:/tmp/roms"
+      - "/tmp/.X11-unix:/tmp/.X11-unix"

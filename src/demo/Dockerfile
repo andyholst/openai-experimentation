@@ -1,5 +1,5 @@
-FROM python:3.9.12-slim-buster as builder
-
+ARG VERSION="${VERSION}"
+FROM python:3.7.13-buster as builder
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip wheel --requirement /tmp/requirements.txt \
@@ -7,7 +7,7 @@ RUN pip wheel --requirement /tmp/requirements.txt \
               --disable-pip-version-check \
               --quiet
 
-FROM python:3.9.12-slim-buster
+FROM openai:${VERSION}
 
 COPY --from=builder /wheelhouse /wheelhouse
 COPY --from=builder /tmp/requirements.txt /tmp/requirements.txt
@@ -17,4 +17,4 @@ RUN pip install --no-index --find-links=/wheelhouse --quiet -r /tmp/requirements
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-CMD ["python", "hello_world/hello_world.py"]
+CMD ["python", "ai_learns_playing_sonic/ai_learns_playing_sonic.py"]

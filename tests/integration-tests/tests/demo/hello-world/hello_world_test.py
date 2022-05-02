@@ -1,6 +1,6 @@
 import pytest
 
 
-@pytest.mark.demo_hello_world
-def test_hello_world():
+@pytest.mark.demo_ai_learns_playing_sonic
+def test_ai_learns_playing_sonic():
     assert True

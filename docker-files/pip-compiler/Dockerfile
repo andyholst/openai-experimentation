@@ -1,10 +1,7 @@
-FROM archlinux/archlinux:base-20220315.0.50478
+FROM python:3.7.13-buster
 
-RUN pacman-key --init
-
-RUN pacman -Syu --noconfirm
-
-RUN pacman -S --noconfirm python-pip
+RUN apt-get update
+RUN apt-get -y install python3-pip python3-dev build-essential
 RUN pip install pip-tools
 
 WORKDIR "/usr/src/app"
