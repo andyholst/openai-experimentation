@@ -7,62 +7,74 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: install dependencies
-        run: sudo apt-get install -y build-essential
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: "sudo apt-get install -y build-essential xvfb"
+      - name: Start virtual frame buffer
+        run: "Xvfb :99.0 -screen 0 1024x768x16 &"
+      - name: Synchronize submodules
+        run: "rm -fr private-retro-roms && \
+          git submodule add --force https://${{ secrets.ACCESS_TOKEN }}@github.com/andyholst/private-retro-roms && \
+          git submodule update --init --recursive"
+      - name: Verify that private-retro-roms/roms/SONIC_W.68K exist
+        run: "test -f private-retro-roms/roms/SONIC_W.68K"
+      - name: Replace symlink for SONIC_W.68K with real copy
+        run: "rm docker-files/openai-environment/roms/SONIC_W.68K && \
+          cp private-retro-roms/roms/SONIC_W.68K docker-files/openai-environment/roms/SONIC_W.68K"
       - name: Validate Docker-Compose files
         env:
           BUILD_ARGUMENT: "validate-docker-compose-files"
           SRC_APP: "src/demo"
-        run: make "${BUILD_ARGUMENT}"
+        run: "make ${BUILD_ARGUMENT}"
       - name: Update OpenAI Python dependencies
         env:
           BUILD_ARGUMENT: "update-openai-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "docker-files/openai-environment"
-        run: rm "${SRC_APP}/requirements.txt" && make "${BUILD_ARGUMENT}"
+        run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Build OpenAI environment
         env:
           APP_NAME: "openai"
           BUILD_ARGUMENT: "build-app"
           SRC_APP: "docker-files/openai-environment"
-        run: make "${BUILD_ARGUMENT}"
+        run: "make ${BUILD_ARGUMENT}"
       - name: Update ai-learns-playing-sonic Python dependencies
         env:
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
-        run: rm "${SRC_APP}/requirements.txt" && make "${BUILD_ARGUMENT}"
+        run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Update unit tests Python dependencies
         env:
           BUILD_ARGUMENT: "update-unit-tests-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "tests/unit-tests"
-        run: rm "${SRC_APP}/requirements.txt" && make "${BUILD_ARGUMENT}"
+        run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Update integration tests Python dependencies
         env:
           BUILD_ARGUMENT: "update-integration-tests-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "tests/integration-tests"
-        run: rm "${SRC_APP}/requirements.txt" && make "${BUILD_ARGUMENT}"
+        run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Run unit tests
         env:
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
-        run: make "${BUILD_ARGUMENT}"
+        run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
       - name: Build Python demo application
         env:
           APP_NAME: "demo-ai-learns-playing-sonic"
           BUILD_ARGUMENT: "build-app"
           SRC_APP: "src/demo"
-        run: make "${BUILD_ARGUMENT}"
+        run: "make ${BUILD_ARGUMENT}"
       - name: Run Python demo application
         env:
           APP_NAME: "demo-ai-learns-playing-sonic"
           BUILD_ARGUMENT: "run-app"
           SRC_APP: "src/demo"
-        run: make "${BUILD_ARGUMENT}"
+        run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
       - name: Run integration tests
         env:
           APP_NAME: "demo-ai-learns-playing-sonic"

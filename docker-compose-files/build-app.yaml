@@ -5,3 +5,5 @@ services:
     image: "${APP_NAME}:${VERSION}"
     build:
       context: "../${SRC_APP}"
+    volumes:
+      - "../roms:/tmp/roms"
