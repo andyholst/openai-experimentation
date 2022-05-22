@@ -1,17 +1,21 @@
-version: "3.4"
+version: "2.4"
 
 services:
   unit-tests:
     build:
       context: "../tests/unit-tests"
     environment:
+      DISPLAY: "$DISPLAY"
       IN_REQUIREMENTS: "${IN_REQUIREMENTS:-requirements.in}"
       PYTEST_ADDOPTS: "${PYTEST_ADDOPTS:-}"
       PYTHONPATH: "src"
       SRC_APP: "${SRC_APP}"
+    group_add:
+      - "video"
     volumes:
       - "../${SRC_APP}:/usr/src/unit-tests/${SRC_APP}"
       - "../tests/unit-tests:/usr/src/unit-tests"
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
     command: >
       --cov=src
       --cov-config=coverage.cfg
