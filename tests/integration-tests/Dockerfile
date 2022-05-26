@@ -1,17 +1,18 @@
-FROM python:3.7.13-slim-buster as builder
+ARG VERSION="${VERSION}"
+FROM base-ubuntu-2204:${VERSION} as builder
 
 COPY requirements.txt /tmp/requirements.txt
-RUN pip wheel --requirement /tmp/requirements.txt \
+RUN python3.7 -m pip wheel --requirement /tmp/requirements.txt \
               --wheel-dir /wheelhouse \
               --disable-pip-version-check \
               --quiet
 
-FROM python:3.7.13-slim-buster
+FROM base-ubuntu-2204:${VERSION}
 
 COPY --from=builder /wheelhouse /wheelhouse
 COPY --from=builder /tmp /tmp
 
-RUN pip install --find-links /wheelhouse \
+RUN python3.7 -m pip install --find-links /wheelhouse \
                 --no-index \
                 --requirement /tmp/requirements.txt \
                 --disable-pip-version-check \
