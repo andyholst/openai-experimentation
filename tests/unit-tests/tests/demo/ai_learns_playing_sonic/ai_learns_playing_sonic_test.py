@@ -36,4 +36,4 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game():
     # Then
     assert dictionary_result
     assert dictionary_result['time'] > 0
-    assert 0 <= dictionary_result['total_reward'] < 500
+    assert 0 <= dictionary_result['total_reward'] < 10000
