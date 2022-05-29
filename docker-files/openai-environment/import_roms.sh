@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-python -m retro.import /tmp/roms
+python3.7 -m retro.import /tmp/roms

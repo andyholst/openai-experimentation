@@ -1,6 +1,7 @@
 DOCKER_COMPOSE_BINARY := docker-compose
 DOCKER_COMPOSE_FILES := docker-compose-files
 DOCKER_COMPOSE_PIP_COMPILER_FILE := $(DOCKER_COMPOSE_FILES)/pip-compiler.yaml
+DOCKER_COMPOSE_AMD_UNIT_TEST_FILE := $(DOCKER_COMPOSE_FILES)/amd-unit-tests.yaml
 DOCKER_COMPOSE_UNIT_TEST_FILE := $(DOCKER_COMPOSE_FILES)/unit-tests.yaml
 DOCKER_COMPOSE_INTEGRATION_TEST_FILE := $(DOCKER_COMPOSE_FILES)/integration-tests.yaml
 DOCKER_COMPOSE_BUILD_APP_FILE := $(DOCKER_COMPOSE_FILES)/build-app.yaml
@@ -18,8 +19,12 @@ build-unit-tests:
 unit-tests: build-unit-tests
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_UNIT_TEST_FILE) run --rm unit-tests
 
+amd-unit-tests: build-unit-tests
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_UNIT_TEST_FILE) run --rm unit-tests
+
 build-integration-tests:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_INTEGRATION_TEST_FILE) build integration-tests
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_INTEGRATION_TEST_FILE) build --build-arg "VERSION=${VERSION}" \
+	integration-tests
 
 integration-tests: build-integration-tests
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_INTEGRATION_TEST_FILE) run --rm integration-tests
@@ -40,8 +45,11 @@ build-app:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build --force-rm --no-cache \
 	--build-arg "VERSION=${VERSION}"
 
+build-app-quick:
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build --build-arg "VERSION=${VERSION}"
+
 run-app:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run --rm app
 
 run-app-cli:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run --rm --tty app /bin/bash
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run --rm -it --tty app /bin/bash
