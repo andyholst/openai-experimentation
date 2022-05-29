@@ -23,7 +23,8 @@ amd-unit-tests: build-unit-tests
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_UNIT_TEST_FILE) run --rm unit-tests
 
 build-integration-tests:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_INTEGRATION_TEST_FILE) build integration-tests
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_INTEGRATION_TEST_FILE) build --build-arg "VERSION=${VERSION}" \
+	integration-tests
 
 integration-tests: build-integration-tests
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_INTEGRATION_TEST_FILE) run --rm integration-tests
