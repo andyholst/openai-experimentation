@@ -1,15 +1,30 @@
 #!/usr/bin/env bash
 
+lspci || exit 1
+
 lspci | grep -i amd
 
 if [ $? -eq 0 ]; then
-  apt-get update
-  DEBIAN_FRONTEND=noninteractive apt-get install -y libnuma-dev wget gnupg2 || exit 1
+  AMDGPU_VERSION=22.10.3
+  ROCM_VERSION=5.1.3
 
-  wget https://repo.radeon.com/amdgpu-install/22.10.3/ubuntu/focal/amdgpu-install_22.10.3.50103-1_all.deb || exit
-  DEBIAN_FRONTEND=noninteractive apt-get install -y ./amdgpu-install_22.10.3.50103-1_all.deb || exit 1
-  yes | DEBIAN_FRONTEND=noninteractive amdgpu-install -y --no-dkms || exit 1
-  rm -rf /var/lib/apt/lists/*
+  echo "export AMDGPU_VERSION=$AMDGPU_VERSION" >> $HOME/.profile
+  echo "export AMDGPU_VERSION=$AMDGPU_VERSION" >> $HOME/.bashrc
+  echo "export AMDGPU_VERSION=$AMDGPU_VERSION" >> $HOME/.zshrc
+
+  echo "export ROCM_VERSION=$ROCM_VERSION" >> $HOME/.profile
+  echo "export ROCM_VERSION=$ROCM_VERSION" >> $HOME/.bashrc
+  echo "export ROCM_VERSION=$ROCM_VERSION" >> $HOME/.zshrc
+
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl gnupg || exit 1
+  curl -sL http://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - || exit 1
+  echo deb [arch=amd64] http://repo.radeon.com/rocm/apt/$ROCM_VERSION/ ubuntu main > /etc/apt/sources.list.d/rocm.list
+  echo deb [arch=amd64] https://repo.radeon.com/amdgpu/$AMDGPU_VERSION/ubuntu focal main > /etc/apt/sources.list.d/amdgpu.list
+  apt-get update
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libdrm-amdgpu-common || exit 1
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends sudo \
+  kmod file rocm-dev rocm-utils rocm-libs rocm-dev rocrand rocblas rocfft \
+  hipsparse hip-base rocsparse rocm-cmake rocm-libs rocm-device-libs rccl || exit 1
   ln -s /opt/rocm/bin/rocminfo /usr/bin/rocminfo
 fi
 
@@ -23,5 +38,4 @@ if [ $? -eq 0 ]; then
 
   apt update
   DEBIAN_FRONTEND=noninteractive apt-get install -y cuda
-  rm -rf /var/lib/apt/lists/*
 fi

@@ -1,12 +1,14 @@
 version: "2.4"
 
 services:
-  unit-tests:
+  pip-compiler:
     extends:
-      file: unit-tests.yaml
-      service: unit-tests
+      file: pip-compiler.yaml
+      service: pip-compiler
     security_opt:
       - seccomp=unconfined
     devices:
       - /dev/kfd
       - /dev/dri
+    group_add:
+      - "video"

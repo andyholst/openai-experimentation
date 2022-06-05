@@ -1,10 +1,22 @@
+SHELL := /bin/bash
+
+ROCM_ARCH="$(shell ./get_rocm_arch.sh)"
+
 DOCKER_COMPOSE_BINARY := docker-compose
 DOCKER_COMPOSE_FILES := docker-compose-files
+
+DOCKER_COMPOSE_AMD_PIP_COMPILER_FILE := $(DOCKER_COMPOSE_FILES)/amd-pip-compiler.yaml
 DOCKER_COMPOSE_PIP_COMPILER_FILE := $(DOCKER_COMPOSE_FILES)/pip-compiler.yaml
+
 DOCKER_COMPOSE_AMD_UNIT_TEST_FILE := $(DOCKER_COMPOSE_FILES)/amd-unit-tests.yaml
 DOCKER_COMPOSE_UNIT_TEST_FILE := $(DOCKER_COMPOSE_FILES)/unit-tests.yaml
+
 DOCKER_COMPOSE_INTEGRATION_TEST_FILE := $(DOCKER_COMPOSE_FILES)/integration-tests.yaml
+
+DOCKER_COMPOSE_AMD_BUILD_APP_FILE := $(DOCKER_COMPOSE_FILES)/amd-build-app.yaml
 DOCKER_COMPOSE_BUILD_APP_FILE := $(DOCKER_COMPOSE_FILES)/build-app.yaml
+
+DOCKER_COMPOSE_AMD_RUN_APP_FILE := $(DOCKER_COMPOSE_FILES)/amd-run-app.yaml
 DOCKER_COMPOSE_RUN_APP_FILE := $(DOCKER_COMPOSE_FILES)/run-app.yaml
 
 export VERSION := $(shell git rev-parse --short HEAD)
@@ -29,17 +41,19 @@ build-integration-tests:
 integration-tests: build-integration-tests
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_INTEGRATION_TEST_FILE) run --rm integration-tests
 
-update-unit-tests-requirements:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm pip-compiler
+build-app-requirements:
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) build --build-arg "VERSION=${VERSION}" \
+	pip-compiler
 
-update-integration-tests-requirements:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm pip-compiler
-
-update-openai-requirements:
+update-app-requirements: build-app-requirements
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm  pip-compiler
 
-update-app-requirements:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm  pip-compiler
+amd-build-app-requirements:
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_PIP_COMPILER_FILE) build --build-arg "VERSION=${VERSION}" \
+	pip-compiler
+
+amd-update-app-requirements: amd-build-app-requirements
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_PIP_COMPILER_FILE) run --rm pip-compiler
 
 build-app:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build --force-rm --no-cache \
@@ -47,6 +61,19 @@ build-app:
 
 build-app-quick:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build --build-arg "VERSION=${VERSION}"
+
+amd-build-app:
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_BUILD_APP_FILE) build --force-rm --no-cache \
+	--build-arg "VERSION=${VERSION}" --build-arg "ROCM_ARCH=$(ROCM_ARCH)"
+
+amd-build-app-quick:
+	docker buildx create --use --name larger_log --node larger_log0 \
+	--driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=1048576000
+	COMPOSE_DOCKER_CLI_BUILD=1 	DOCKER_BUILDKIT=1 $(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_BUILD_APP_FILE) \
+	build --build-arg "VERSION=${VERSION}" --build-arg "ROCM_ARCH=$(ROCM_ARCH)"
+
+amd-run-app:
+	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_RUN_APP_FILE) run --rm -it app bash
 
 run-app:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run --rm app

@@ -35,7 +35,7 @@ jobs:
         run: "make ${BUILD_ARGUMENT}"
       - name: Update OpenAI Python dependencies
         env:
-          BUILD_ARGUMENT: "update-openai-requirements"
+          BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "docker-files/openai-environment"
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
@@ -53,13 +53,13 @@ jobs:
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Update unit tests Python dependencies
         env:
-          BUILD_ARGUMENT: "update-unit-tests-requirements"
+          BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "tests/unit-tests"
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Update integration tests Python dependencies
         env:
-          BUILD_ARGUMENT: "update-integration-tests-requirements"
+          BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "tests/integration-tests"
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
