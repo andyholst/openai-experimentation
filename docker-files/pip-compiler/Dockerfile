@@ -7,6 +7,5 @@ RUN pip install pip-tools
 
 WORKDIR "/usr/src/app"
 
-COPY install_proper_gpu_pip_dependencies.sh /tmp/install_proper_gpu_pip_dependencies.sh
-
-CMD sh /tmp/install_proper_gpu_pip_dependencies.sh && pip-compile --verbose --rebuild --upgrade "${IN_REQUIREMENTS}"
+CMD source /tmp/install_proper_gpu_pip_dependencies.sh && pip-compile --verbose \
+  "${EXTRA_INDEX_URL}" --rebuild --upgrade "${IN_REQUIREMENTS}"
