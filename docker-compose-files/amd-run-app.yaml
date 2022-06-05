@@ -1,0 +1,7 @@
+version: "2.4"
+
+services:
+  app:
+    extends:
+      file: amd-build-app.yaml
+      service: app

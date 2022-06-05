@@ -1,4 +1,5 @@
 import retro
+import torch
 from demo.ai_learns_playing_sonic.ai_learns_playing_sonic import about_to_play_sonic, main
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
@@ -11,6 +12,9 @@ def test_about_to_play_sonic():
 
 def test_ai_to_play_the_sonic_game():
     # Given
+    print("torch.__version__: ", torch.__version__)
+    print("cuda.is_available: ", torch.cuda.is_available())
+
     environment = retro.make(game="SonicTheHedgehog-Genesis", state="GreenHillZone.Act1")
 
     # When
@@ -24,6 +28,9 @@ def test_ai_to_play_the_sonic_game():
 
 def test_train_ai_to_be_better_at_playing_the_sonic_game():
     # Given
+    print("torch.__version__: ", torch.__version__)
+    print("cuda.is_available: ", torch.cuda.is_available())
+
     environment = DummyVecEnv([lambda: retro.make(game="SonicTheHedgehog-Genesis", state="GreenHillZone.Act1")])
     environment = VecNormalize(environment, norm_obs=True, norm_reward=False, clip_obs=10.)
 
