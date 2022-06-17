@@ -32,7 +32,7 @@ if [ "$ROCM_ARCH" == "gfx803" ]; then
   export MAX_JOBS=6
 
   git clone https://github.com/pytorch/pytorch
-  cd /pytorch
+  cd pytorch
   git submodule update --init --recursive -q
   python3.7 tools/amd_build/build_amd.py
   PYTORCH_ROCM_ARCH="$ROCM_ARCH" python3.7 setup.py install

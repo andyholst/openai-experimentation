@@ -14,7 +14,6 @@ COPY verify_pytorch_is_installed.py /tmp/verify_pytorch_is_installed.py
 RUN mkdir -p /tmp/pytorch_compilation
 WORKDIR /tmp/pytorch_compilation
 
-
 RUN source $HOME/.bashrc && /tmp/compile_pytorch_from_source_if_gfx803.sh
 RUN rm -fr /tmp/pytorch_compilation
 RUN python3.7 verify_pytorch_is_installed.py
