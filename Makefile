@@ -59,8 +59,7 @@ build-app-quick:
 
 amd-build-app:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_BUILD_APP_FILE) build --force-rm --no-cache \
-	--build-arg "VERSION=${VERSION}" --build-arg "ROCM_ARCH=$(ROCM_ARCH)" \
-	--progress plain
+	--build-arg "VERSION=${VERSION}" --build-arg "ROCM_ARCH=$(ROCM_ARCH)"
 
 amd-build-app-quick:
 	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_BUILD_APP_FILE) build --build-arg "VERSION=${VERSION}" \
