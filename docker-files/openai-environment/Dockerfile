@@ -16,5 +16,8 @@ WORKDIR /tmp/pytorch_compilation
 
 RUN source $HOME/.bashrc && /tmp/compile_pytorch_from_source_if_gfx803.sh
 RUN rm -fr /tmp/pytorch_compilation
-RUN python3.7 verify_pytorch_is_installed.py
-RUN python3.7 -m pip install --requirement /tmp/requirements.txt --disable-pip-version-check && /tmp/import_roms.sh"]
+RUN python3.7 -m pip install --requirement /tmp/requirements.txt --disable-pip-version-check && /tmp/import_roms.sh
+
+WORKDIR /tmp/pytorch_compilation
+
+RUN verify_pytorch_is_installed.py
