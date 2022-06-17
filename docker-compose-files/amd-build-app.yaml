@@ -14,3 +14,4 @@ services:
       - "video"
     environment:
       DOCKER_BUILDKIT: 0
+      COMPOSE_DOCKER_CLI_BUILD: 0
