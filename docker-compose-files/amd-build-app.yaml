@@ -12,8 +12,5 @@ services:
       - /dev/dri
     group_add:
       - "video"
-    logging:
-      driver: "json-file"
-      options:
-        max-file: "10"   # number of files or file count
-        max-size: "100m" # file size
+    environment:
+      DOCKER_BUILDKIT: 0
