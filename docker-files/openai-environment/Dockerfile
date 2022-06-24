@@ -26,5 +26,3 @@ RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
 
 COPY verify_pytorch_is_installed.py /tmp/verify_pytorch_is_installed.py
-
-ENTRYPOINT ["bash", "-c" , "source ~/.zshrc && python3.7 /tmp/verify_pytorch_is_installed.py"]

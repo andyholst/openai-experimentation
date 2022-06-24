@@ -1,0 +1,27 @@
+SHELL := /bin/bash
+
+export ROCM_ARCH="gfx803"
+export ROCM_VERSION="5.1.3"
+
+DOCKER_COMPOSE_BINARY := docker-compose
+DOCKER_COMPOSE_FILES := docker-compose-files
+
+DOCKER_COMPOSE_BUILD_APP_FILE := $(DOCKER_COMPOSE_FILES)/build-app.yaml
+DOCKER_COMPOSE_RUN_APP_FILE := $(DOCKER_COMPOSE_FILES)/run-app.yaml
+
+export VERSION := $(shell git rev-parse --short HEAD)
+
+validate-docker-compose-files:
+	$(foreach file, $(wildcard $(DOCKER_COMPOSE_FILES)/*.yaml), \
+	$(DOCKER_COMPOSE_BINARY) --file="${file}" config > /dev/null || exit $?;)
+
+build-app:
+	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build \
+	--build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
+	--build-arg PYPI_ROCM_REPOSITORY="${PYPI_ROCM_REPOSITORY}" \
+	--build-arg PYPI_USERNAME="${PYPI_USERNAME}" \
+	--build-arg PYPI_PASSWORD="${PYPI_PASSWORD}" \
+	--build-arg BUILDKIT_INLINE_CACHE=1
+
+run-app:
+	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run app bash
