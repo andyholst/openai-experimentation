@@ -1,5 +1,11 @@
 FROM ubuntu:20.04
 
+ARG ROCM_VERSION="${ROCM_VERSION}"
+ENV ROCM_VERSION="${ROCM_VERSION}"
+
+ARG ROCM_ARCH="${ROCM_ARCH}"
+ENV ROCM_ARCH="${ROCM_ARCH}"
+
 RUN dpkg --add-architecture i386
 
 RUN apt-get update
@@ -28,8 +34,6 @@ RUN python3.7 get-pip.py
 RUN python3.7 -m pip install pip-tools
 
 COPY install_proper_gpu_dependencies.sh /tmp/install_proper_gpu_dependencies.sh
-
-RUN  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libstdc++-7-dev libgcc-7-dev
 
 RUN sh /tmp/install_proper_gpu_dependencies.sh
 

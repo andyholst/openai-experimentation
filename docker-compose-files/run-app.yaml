@@ -9,3 +9,5 @@ services:
       - "video"
     volumes:
       - "/tmp/.X11-unix:/tmp/.X11-unix"
+      # For testing and building PyTorch and deploy it to a Python wheel artifactory repository
+      # - "../build:/usr/src"

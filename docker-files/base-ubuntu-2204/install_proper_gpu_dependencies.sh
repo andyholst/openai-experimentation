@@ -2,11 +2,9 @@
 
 lspci || exit 1
 
-lspci | grep -i amd
-
-if [ $? -eq 0 ]; then
+if [ ! -z "$ROCM_ARCH" ]; then
   AMDGPU_VERSION=22.10.3
-  ROCM_VERSION=5.1.3
+  ROCM_VERSION=$ROCM_VERSION
 
   echo "export AMDGPU_VERSION=$AMDGPU_VERSION" >> $HOME/.profile
   echo "export AMDGPU_VERSION=$AMDGPU_VERSION" >> $HOME/.bashrc
@@ -15,6 +13,8 @@ if [ $? -eq 0 ]; then
   echo "export ROCM_VERSION=$ROCM_VERSION" >> $HOME/.profile
   echo "export ROCM_VERSION=$ROCM_VERSION" >> $HOME/.bashrc
   echo "export ROCM_VERSION=$ROCM_VERSION" >> $HOME/.zshrc
+
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libstdc++-7-dev libgcc-7-dev || exit 1
 
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl gnupg || exit 1
   curl -sL http://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - || exit 1
@@ -28,9 +28,7 @@ if [ $? -eq 0 ]; then
   ln -s /opt/rocm/bin/rocminfo /usr/bin/rocminfo
 fi
 
-lspci | grep -i nvidia
-
-if [ $? -eq 0 ]; then
+if [ ! -z "$CUDA_ARCH" ]; then
   apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub || exit 1
   wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin || exit 1
   mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 || exit 1
