@@ -1,12 +1,11 @@
 SHELL := /bin/bash
 
-export ROCM_ARCH=""
-export ROCM_VERSION=""
+export ROCM_ARCH="$(shell ./get_rocm_arch.sh)"
+export ROCM_VERSION="$(shell ./get_rocm_version.sh)"
 
 DOCKER_COMPOSE_BINARY := docker-compose
 DOCKER_COMPOSE_FILES := docker-compose-files
 
-DOCKER_COMPOSE_AMD_PIP_COMPILER_FILE := $(DOCKER_COMPOSE_FILES)/amd-pip-compiler.yaml
 DOCKER_COMPOSE_PIP_COMPILER_FILE := $(DOCKER_COMPOSE_FILES)/pip-compiler.yaml
 
 DOCKER_COMPOSE_AMD_UNIT_TEST_FILE := $(DOCKER_COMPOSE_FILES)/amd-unit-tests.yaml
@@ -14,7 +13,6 @@ DOCKER_COMPOSE_UNIT_TEST_FILE := $(DOCKER_COMPOSE_FILES)/unit-tests.yaml
 
 DOCKER_COMPOSE_INTEGRATION_TEST_FILE := $(DOCKER_COMPOSE_FILES)/integration-tests.yaml
 
-DOCKER_COMPOSE_AMD_BUILD_APP_FILE := $(DOCKER_COMPOSE_FILES)/amd-build-app.yaml
 DOCKER_COMPOSE_BUILD_APP_FILE := $(DOCKER_COMPOSE_FILES)/build-app.yaml
 
 DOCKER_COMPOSE_AMD_RUN_APP_FILE := $(DOCKER_COMPOSE_FILES)/amd-run-app.yaml
@@ -46,17 +44,11 @@ integration-tests: build-integration-tests
 
 build-app-requirements:
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) build --build-arg VERSION=${VERSION} \
-	--build-arg BUILDKIT_INLINE_CACHE=1 pip-compiler
+	--build-arg BUILDKIT_INLINE_CACHE=1 --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
+	pip-compiler
 
 update-app-requirements: build-app-requirements
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) run --rm  pip-compiler
-
-amd-build-app-requirements:
-	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_PIP_COMPILER_FILE) build --build-arg VERSION=${VERSION} \
-	--build-arg BUILDKIT_INLINE_CACHE=1 pip-compiler
-
-amd-update-app-requirements: amd-build-app-requirements
-	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_PIP_COMPILER_FILE) run --rm pip-compiler
 
 build-app:
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build --force-rm --no-cache \
@@ -66,16 +58,6 @@ build-app:
 build-app-quick:
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build \
 	--build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
-	--build-arg BUILDKIT_INLINE_CACHE=1
-
-amd-build-app:
-	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_BUILD_APP_FILE) build --force-rm --no-cache \
-	--build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
-	--build-arg BUILDKIT_INLINE_CACHE=1
-
-amd-build-app-quick:
-	@$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_AMD_BUILD_APP_FILE) \
-	build --build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
 	--build-arg BUILDKIT_INLINE_CACHE=1
 
 amd-run-app:

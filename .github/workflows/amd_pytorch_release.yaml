@@ -1,6 +1,6 @@
 name: "Build and release PyTorch pipeline"
 
-on: push
+on: workflow_dispatch
 
 env:
   DOCKER_BUILDKIT: 1

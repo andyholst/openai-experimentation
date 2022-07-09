@@ -1,6 +1,12 @@
 ARG VERSION="${VERSION}"
 FROM base-ubuntu-2204:${VERSION}
 
+ARG ROCM_VERSION="${ROCM_VERSION}"
+ENV ROCM_VERSION="${ROCM_VERSION}"
+
+ARG ROCM_ARCH="${ROCM_ARCH}"
+ENV ROCM_ARCH="${ROCM_ARCH}"
+
 WORKDIR "/usr/src/app"
 
 COPY install_proper_gpu_pip_dependencies.sh /tmp/install_proper_gpu_pip_dependencies.sh

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-lspci || exit 1
-
 if [ ! -z "$ROCM_ARCH" ]; then
   AMDGPU_VERSION=22.10.3
   ROCM_VERSION=$ROCM_VERSION

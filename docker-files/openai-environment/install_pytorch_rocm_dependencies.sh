@@ -1,8 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-if [ "$ROCM_ARCH" == "gfx803" ]; then
-  sed -i '/torch.*/d' /tmp/requirements.txt
-
+if [ "$ROCM_ARCH" ]; then
   python3.7 -m pip install astunparse numpy ninja pyyaml setuptools cmake cffi typing_extensions future six \
   requests dataclasses cython pillow h5py sklearn matplotlib editdistance pandas portpicker typing enum34 \
   hypothesis mkl mkl-include || exit 1
@@ -27,18 +25,4 @@ if [ "$ROCM_ARCH" == "gfx803" ]; then
   update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 || exit 1
   update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 50 || exit 1
   update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 50 || exit 1
-
-  export MAKEFLAGS="-j$(nproc)"
-  export MAX_JOBS=$(nproc)
-  export NINJAFLAGS="-j$(nproc)"
-
-  git clone https://github.com/pytorch/pytorch
-  cd pytorch
-  git submodule update --init --recursive -q
-  python3.7 tools/amd_build/build_amd.py
-
-  USE_ROCM=1 PYTORCH_ROCM_ARCH="$ROCM_ARCH" python3.7 setup.py bdist_wheel
-  TORCH_PYTHON_INSTALL_FILE="$(find dist -name "torch*.whl" | tail -1)"
-
-  python3.7 -m pip install "$TORCH_PYTHON_INSTALL_FILE"
 fi
