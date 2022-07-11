@@ -23,7 +23,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
       - name: Install dependencies
-        run: "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential xvfb"
+        run: "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential xvfb x11-xserver-utils"
       - name: Start virtual frame buffer
         run: "Xvfb :99.0 -screen 0 1024x768x16 &"
       - name: Synchronize submodules
