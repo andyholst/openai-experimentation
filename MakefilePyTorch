@@ -1,8 +1,5 @@
 SHELL := /bin/bash
 
-export ROCM_ARCH="gfx803"
-export ROCM_VERSION="5.1.3"
-
 DOCKER_COMPOSE_BINARY := docker-compose
 DOCKER_COMPOSE_FILES := docker-compose-files
 
