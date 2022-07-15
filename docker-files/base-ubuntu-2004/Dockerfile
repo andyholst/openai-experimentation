@@ -11,7 +11,7 @@ RUN dpkg --add-architecture i386
 RUN apt-get update
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y pkg-config build-essential \
-    ffmpeg git python3-dev python3-opengl pciutils software-properties-common curl
+    ffmpeg git python3-dev python3-opengl pciutils software-properties-common curl gettext-base
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6AF7F09730B3F0A4
 

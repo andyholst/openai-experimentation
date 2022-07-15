@@ -42,9 +42,9 @@ jobs:
         run: "make ${BUILD_ARGUMENT}"
       - name: Build Base Ubuntu 22.04 image
         env:
-          APP_NAME: "base-ubuntu-2204"
+          APP_NAME: "base-ubuntu-2004"
           BUILD_ARGUMENT: "build-app-quick"
-          SRC_APP: "docker-files/base-ubuntu-2204"
+          SRC_APP: "docker-files/base-ubuntu-2004"
         run: "make ${BUILD_ARGUMENT}"
       - name: Update OpenAI Python dependencies
         env:

@@ -27,10 +27,10 @@ if [ ! -z "$ROCM_ARCH" ]; then
 fi
 
 if [ ! -z "$CUDA_ARCH" ]; then
-  apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub || exit 1
-  wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin || exit 1
+  apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub || exit 1
+  wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin || exit 1
   mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 || exit 1
-  add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" || exit 1
+  add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" || exit 1
 
   apt update
   DEBIAN_FRONTEND=noninteractive apt-get install -y cuda

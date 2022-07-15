@@ -1,5 +1,5 @@
 ARG VERSION="${VERSION}"
-FROM base-ubuntu-2204:${VERSION}
+FROM base-ubuntu-2004:${VERSION}
 
 ARG ROCM_VERSION="${ROCM_VERSION}"
 ENV ROCM_VERSION="${ROCM_VERSION}"
@@ -15,9 +15,6 @@ ENV PYPI_USERNAME="${PYPI_USERNAME}"
 
 ARG PYPI_PASSWORD="${PYPI_PASSWORD}"
 ENV PYPI_PASSWORD="${PYPI_PASSWORD}"
-
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y gettext-base
 
 RUN python3.7 -m pip install twine
 
