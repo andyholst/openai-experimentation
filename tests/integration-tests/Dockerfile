@@ -1,5 +1,5 @@
 ARG VERSION="${VERSION}"
-FROM base-ubuntu-2204:${VERSION} as builder
+FROM base-ubuntu-2004:${VERSION} as builder
 
 COPY requirements.txt /tmp/requirements.txt
 RUN python3.7 -m pip wheel --requirement /tmp/requirements.txt \
@@ -7,7 +7,7 @@ RUN python3.7 -m pip wheel --requirement /tmp/requirements.txt \
               --disable-pip-version-check \
               --quiet
 
-FROM base-ubuntu-2204:${VERSION}
+FROM base-ubuntu-2004:${VERSION}
 
 COPY --from=builder /wheelhouse /wheelhouse
 COPY --from=builder /tmp /tmp

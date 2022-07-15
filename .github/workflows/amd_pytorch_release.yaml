@@ -41,9 +41,9 @@ jobs:
         env:
           ROCM_ARCH: "${{ github.event.inputs.ROCM_ARCH }}"
           ROCM_VERSION: "${{ github.event.inputs.ROCM_VERSION }}"
-          APP_NAME: "base-ubuntu-2204"
+          APP_NAME: "base-ubuntu-2004"
           BUILD_ARGUMENT: "build-app"
-          SRC_APP: "docker-files/base-ubuntu-2204"
+          SRC_APP: "docker-files/base-ubuntu-2004"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
       - name: Release ROCm PyTorch built and packaged binaries
         env:
