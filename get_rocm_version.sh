@@ -11,5 +11,5 @@ if [ $? -eq 0 ]; then
   fi
   echo $ROCM_VERSION
 else
-  echo "5.1.3"
+  echo ""
 fi
