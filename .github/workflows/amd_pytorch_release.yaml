@@ -37,7 +37,7 @@ jobs:
           BUILD_ARGUMENT: "validate-docker-compose-files"
           SRC_APP: "src/demo"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
-      - name: Build Base Ubuntu 22.04 image
+      - name: Build Base Ubuntu 20.04 image
         env:
           ROCM_ARCH: "${{ github.event.inputs.ROCM_ARCH }}"
           ROCM_VERSION: "${{ github.event.inputs.ROCM_VERSION }}"

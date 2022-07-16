@@ -40,7 +40,7 @@ jobs:
           BUILD_ARGUMENT: "validate-docker-compose-files"
           SRC_APP: "src/demo"
         run: "make ${BUILD_ARGUMENT}"
-      - name: Build Base Ubuntu 22.04 image
+      - name: Build Base Ubuntu 20.04 image
         env:
           APP_NAME: "base-ubuntu-2004"
           BUILD_ARGUMENT: "build-app-quick"
