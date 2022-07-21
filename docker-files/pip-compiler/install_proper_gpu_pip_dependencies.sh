@@ -6,8 +6,11 @@ IN_REQUIREMENTS=$1
 if [ ! -z $ROCM_ARCH ]; then
     if [ $ROCM_ARCH == "gfx803" ]; then
       sed -i '/torch.*/d' "${IN_REQUIREMENTS}"
-      echo 'torch' >> "${IN_REQUIREMENTS}"
-      EXTRA_INDEX_URL="--pre --extra-index-url https://docondee.jfrog.io/artifactory/api/pypi/docondee-rocm-pypi/simple"
+      uri="https://docondee.jfrog.io/artifactory/api/pypi/docondee-rocm-pypi/simple"
+      TORCH_VERSION=$(curl "$uri"/torch/ | sed 's/<\/*[^>]*>//g' | grep torch | sed 's/-cp.*//g' | grep -i "$ROCM_VERSION" | head -1)
+      TORCH_PACKAGE_VERSION=$(echo $TORCH_VERSION | sed 's/torch-/torch==/g')
+      echo "${TORCH_PACKAGE_VERSION}" >> "${IN_REQUIREMENTS}"
+      EXTRA_INDEX_URL="--pre --extra-index-url $uri"
     else
       EXTRA_INDEX_URL="--pre --extra-index-url https://download.pytorch.org/whl/nightly/rocm5.1.1/"
     fi
