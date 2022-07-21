@@ -41,8 +41,8 @@ validates_docker_compose_files:
 build_base_ubuntu_2004_image:
   stage: build base ubuntu image
   variables:
-    ROCM_ARCH: "gfx803"
-    ROCM_VERSION: "5.1.3"
+    ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
+    ROCM_VERSION: "5.2"
     APP_NAME: "base-ubuntu-2004"
     BUILD_ARGUMENT: "build-app"
     SRC_APP: "docker-files/base-ubuntu-2004"
@@ -52,8 +52,8 @@ build_base_ubuntu_2004_image:
 package_and_release_pytorch_pypi_package:
   stage: release pytorch rocm pypi package
   variables:
-    ROCM_ARCH: "gfx803"
-    ROCM_VERSION: "5.1.3"
+    ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
+    ROCM_VERSION: "5.2"
     APP_NAME: "amd-rocm-pytorch-release"
     BUILD_ARGUMENT: "build-app"
     SRC_APP: "docker-files/amd-pytorch-release"
