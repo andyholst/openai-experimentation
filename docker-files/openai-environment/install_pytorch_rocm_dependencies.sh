@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$ROCM_ARCH" ]; then
+if [ ! -z "${ROCM_ARCH}" ]; then
   python3.7 -m pip install astunparse numpy ninja pyyaml setuptools cmake cffi typing_extensions future six \
   requests dataclasses cython pillow h5py sklearn matplotlib editdistance pandas portpicker typing enum34 \
   hypothesis mkl mkl-include || exit 1

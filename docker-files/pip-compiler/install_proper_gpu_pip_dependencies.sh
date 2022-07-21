@@ -3,7 +3,7 @@
 EXTRA_INDEX_URL=""
 IN_REQUIREMENTS=$1
 
-if [ ! -z $ROCM_ARCH ]; then
+if [ ! -z "${ROCM_ARCH}" ]; then
     if [ $ROCM_ARCH == "gfx803" ]; then
       sed -i '/torch.*/d' "${IN_REQUIREMENTS}"
       uri="https://docondee.jfrog.io/artifactory/api/pypi/docondee-rocm-pypi/simple"

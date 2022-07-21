@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -z "$ROCM_ARCH" ]; then
+if [ ! -z "${ROCM_ARCH}" ]; then
   AMDGPU_VERSION=22.10.3
   ROCM_VERSION=$ROCM_VERSION
 
