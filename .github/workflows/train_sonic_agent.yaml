@@ -1,0 +1,97 @@
+name: "Train Sonic skills CI pipeline"
+
+on:
+  workflow_dispatch:
+    inputs:
+      SONIC_GAME:
+        description: "Sonic game to train the Sonic agent on."
+        required: true
+        default: "SonicTheHedgehog-Genesis"
+      SONIC_STATE:
+        description: "The game level the Sonic agent will be trained on."
+        required: true
+        default: "GreenHillZone.Act1"
+
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Install dependencies
+        run: "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential xvfb x11-xserver-utils curl"
+      - name: Start virtual frame buffer
+        run: "Xvfb :99.0 -screen 0 1024x768x16 &"
+      - name: Synchronize submodules
+        run: "rm -fr private-retro-roms && \
+          git submodule add --force https://${{ secrets.ACCESS_TOKEN }}@github.com/andyholst/private-retro-roms && \
+          git submodule update --init --recursive"
+      - name: Verify that private-retro-roms/roms/SONIC_W.68K exist
+        run: "test -f private-retro-roms/roms/SONIC_W.68K"
+      - name: Replace symlink for SONIC_W.68K with real copy
+        run: "rm docker-files/openai-environment/roms/SONIC_W.68K && \
+          cp private-retro-roms/roms/SONIC_W.68K docker-files/openai-environment/roms/SONIC_W.68K"
+      - name: Validate Docker-Compose files
+        env:
+          BUILD_ARGUMENT: "validate-docker-compose-files"
+          SRC_APP: "src/demo"
+        run: "make ${BUILD_ARGUMENT}"
+      - name: Build Base Ubuntu 20.04 image
+        env:
+          APP_NAME: "base-ubuntu-2004"
+          BUILD_ARGUMENT: "build-app-quick"
+          SRC_APP: "docker-files/base-ubuntu-2004"
+        run: "make ${BUILD_ARGUMENT}"
+      - name: Update OpenAI Python dependencies
+        env:
+          BUILD_ARGUMENT: "update-app-requirements"
+          IN_REQUIREMENTS: "requirements.in"
+          SRC_APP: "docker-files/openai-environment"
+        run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
+      - name: Build OpenAI environment
+        env:
+          APP_NAME: "openai"
+          BUILD_ARGUMENT: "build-app-quick"
+          SRC_APP: "docker-files/openai-environment"
+        run: "make ${BUILD_ARGUMENT}"
+      - name: Update ai-learns-playing-sonic Python dependencies
+        env:
+          BUILD_ARGUMENT: "update-app-requirements"
+          IN_REQUIREMENTS: "requirements.in"
+          SRC_APP: "src/demo"
+        run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
+      - name: Update unit tests Python dependencies
+        env:
+          BUILD_ARGUMENT: "update-app-requirements"
+          IN_REQUIREMENTS: "requirements.in"
+          SRC_APP: "tests/unit-tests"
+        run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
+      - name: Train sonic agent for given game and level state
+        env:
+          SONIC_GAME: "${{ github.event.inputs.SONIC_GAME }}"
+          SONIC_STATE: "${{ github.event.inputs.SONIC_STATE }}"
+          BUILD_ARGUMENT: "unit-tests"
+          IN_REQUIREMENTS: "requirements.in"
+          SRC_APP: "src/demo"
+          TEST_SUIT: "train_sonic_agent"
+        run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
+      - name: Upload trained Sonic model to GitHub artifactory
+        env:
+          GENERIC_REPOSITORY: "${{ secrets.GENERIC_REPOSITORY }}"
+          PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
+          PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
+        run: "find tests/unit-tests -name '*.agent' | xargs -I{} curl -u${PYPI_USERNAME}:${PYPI_PASSWORD} -T $(basename {} .agent) ${GENERIC_REPOSITORY}/"

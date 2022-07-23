@@ -10,6 +10,7 @@ services:
       PYTEST_ADDOPTS: "${PYTEST_ADDOPTS:-}"
       PYTHONPATH: "src"
       SRC_APP: "${SRC_APP}"
+      TEST_SUIT: "${TEST_SUIT}"
     group_add:
       - "video"
     volumes:
@@ -17,6 +18,4 @@ services:
       - "../tests/unit-tests:/usr/src/unit-tests"
       - "/tmp/.X11-unix:/tmp/.X11-unix"
     command: >
-      --cov=src
-      --cov-config=coverage.cfg
-      --cov-report=term-missing
+      pytest --cov=src --cov-config=coverage.cfg --cov-report=term-missing -m "${TEST_SUIT}"
