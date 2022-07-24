@@ -20,4 +20,4 @@ RUN python3.7 -m pip install --find-links /wheelhouse \
 
 WORKDIR /usr/src/unit-tests
 
-ENTRYPOINT ["bash", "-c" , "source ~/.zshrc && py.test -c setup.cfg -p no:cacheprovider"]
+CMD ["bash", "-c" , "source ~/.zshrc && py.test -c setup.cfg -p no:cacheprovider"]

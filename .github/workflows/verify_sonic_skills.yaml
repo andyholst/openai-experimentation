@@ -1,4 +1,4 @@
-name: "Python CI pipeline"
+name: "Verify Sonic skills CI pipeline"
 
 on: push
 
@@ -81,6 +81,7 @@ jobs:
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
+          TEST_SUIT: "test_sonic_skills"
         run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
       - name: Build Python demo application
         env:
