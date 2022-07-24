@@ -11,6 +11,8 @@ services:
       PYTHONPATH: "src"
       SRC_APP: "${SRC_APP}"
       TEST_SUIT: "${TEST_SUIT}"
+      SONIC_GAME: "${SONIC_GAME}"
+      SONIC_STATE: "${SONIC_STATE}"
     group_add:
       - "video"
     volumes:
