@@ -1,16 +1,6 @@
 name: "Train Sonic skills CI pipeline"
 
-on:
-  workflow_dispatch:
-    inputs:
-      SONIC_GAME:
-        description: "Sonic game to train the Sonic agent on."
-        required: true
-        default: "SonicTheHedgehog-Genesis"
-      SONIC_STATE:
-        description: "The game level the Sonic agent will be trained on."
-        required: true
-        default: "GreenHillZone.Act1"
+on: push
 
 env:
   DOCKER_BUILDKIT: 1
@@ -61,6 +51,8 @@ jobs:
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "docker-files/openai-environment"
+          PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
+          PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Build OpenAI environment
         env:
@@ -82,16 +74,21 @@ jobs:
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Train sonic agent for given game and level state
         env:
-          SONIC_GAME: "${{ github.event.inputs.SONIC_GAME }}"
-          SONIC_STATE: "${{ github.event.inputs.SONIC_STATE }}"
+          SONIC_GAME: "SonicTheHedgehog-Genesis"
+          SONIC_STATE: "GreenHillZone.Act1"
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
           TEST_SUIT: "train_sonic_agent"
         run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
+      - name: Set environment variable for the trained Sonic agent for the artifact upload
+        run: |
+          source setup_agent_filename_and_filepath_env.sh
+          echo SONIC_AGENT_NAME=${SONIC_AGENT_NAME} >> $GITHUB_ENV
+          echo SONIC_AGENT_FILE=${SONIC_AGENT_FILE} >> $GITHUB_ENV
       - name: Upload trained Sonic model to GitHub artifactory
-        env:
-          GENERIC_REPOSITORY: "${{ secrets.GENERIC_REPOSITORY }}"
-          PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
-          PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
-        run: "find tests/unit-tests -name '*.agent' | xargs -I{} curl -u${PYPI_USERNAME}:${PYPI_PASSWORD} -T $(basename {} .agent) ${GENERIC_REPOSITORY}/"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{ env.SONIC_AGENT_NAME }}"
+          path: "${{ env.SONIC_AGENT_FILE }}"
+          if-no-files-found: error
