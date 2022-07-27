@@ -5,7 +5,7 @@ IN_REQUIREMENTS=$1
 
 if [ ! -z "${ROCM_ARCH}" ]; then
     sed -i '/torch.*/d' "${IN_REQUIREMENTS}"
-    uri="https://docondee.jfrog.io/artifactory/api/pypi/docondee-rocm-pypi/simple"
+    uri="https://${PYPI_USERNAME}:${PYPI_PASSWORD}@docondee.jfrog.io/artifactory/api/pypi/docondee-rocm-pypi/simple"
     TORCH_VERSION=$(curl "$uri"/torch/ | sed 's/<\/*[^>]*>//g' | grep torch | sed 's/-cp.*//g' | grep -i "$ROCM_VERSION" | head -1)
     TORCH_PACKAGE_VERSION=$(echo $TORCH_VERSION | sed 's/torch-/torch==/g')
     echo "${TORCH_PACKAGE_VERSION}" >> "${IN_REQUIREMENTS}"
