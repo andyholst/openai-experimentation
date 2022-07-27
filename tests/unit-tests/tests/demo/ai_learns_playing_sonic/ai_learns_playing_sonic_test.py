@@ -1,10 +1,15 @@
 import os
-
+import platform
 import pytest
 import retro
+import tempfile
+import urllib.request
+import validators
+import zipfile
 
 from datetime import datetime
 from os.path import exists
+from pathlib import Path
 
 from demo.ai_learns_playing_sonic.ai_learns_playing_sonic import about_to_play_sonic, main
 from stable_baselines3 import PPO
@@ -55,13 +60,23 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
 
 
 @pytest.mark.test_sonic_agent
-def test_sonic_agent(game=os.getenv('SONIC_GAME'), state=os.getenv('SONIC_STATE'), agent=None):
+def test_sonic_agent(game=os.getenv('SONIC_GAME'), state=os.getenv('SONIC_STATE'),
+                     agent_file=os.getenv('SONIC_AGENT_FILE')):
     # Given
-    assert agent
+    assert agent_file
+
+    path, filename = os.path.split(agent_file)
+    path = Path('/tmp' if platform.system() == 'Darwin' else tempfile.gettempdir())
+    file = f'{path}/{filename}'
+
+    if validators.url(agent_file):
+        urllib.request.urlretrieve(agent_file, file)
+
+    file = f'{path}/{filename}'
 
     environment = DummyVecEnv([lambda: retro.make(game=game, state=state)])
     environment = VecNormalize(environment, norm_obs=True, norm_reward=False, clip_obs=10.)
-    agent = PPO.load(path=agent, env=environment, verbose=1)
+    agent = PPO.load(path=file, env=environment, verbose=1)
 
     # When
     dictionary_result = main(environment, agent)
