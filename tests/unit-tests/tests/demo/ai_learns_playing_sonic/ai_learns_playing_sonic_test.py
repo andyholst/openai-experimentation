@@ -5,7 +5,6 @@ import retro
 import tempfile
 import urllib.request
 import validators
-import zipfile
 
 from datetime import datetime
 from os.path import exists
