@@ -4,3 +4,4 @@ flake8==3.*
 flake8==3.*
 pytest-cov==2.*
 pytest-ordering==0.*
+validators==0.20.*

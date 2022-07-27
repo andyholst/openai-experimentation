@@ -13,6 +13,7 @@ services:
       TEST_SUIT: "${TEST_SUIT}"
       SONIC_GAME: "${SONIC_GAME}"
       SONIC_STATE: "${SONIC_STATE}"
+      SONIC_AGENT_FILE: "${SONIC_AGENT_FILE}"
     group_add:
       - "video"
     volumes:
