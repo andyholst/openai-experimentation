@@ -1,6 +1,16 @@
 name: "Train Sonic skills CI pipeline"
 
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      SONIC_GAME:
+        description: "Sonic game to train the Sonic agent on."
+        required: true
+        default: "SonicTheHedgehog-Genesis"
+      SONIC_STATE:
+        description: "The game level the Sonic agent will be trained on."
+        required: true
+        default: "GreenHillZone.Act1"
 
 env:
   DOCKER_BUILDKIT: 1
@@ -74,14 +84,14 @@ jobs:
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Train sonic agent for given game and level state
         env:
-          SONIC_GAME: "SonicTheHedgehog-Genesis"
-          SONIC_STATE: "GreenHillZone.Act1"
+          SONIC_GAME: "${{ github.event.inputs.SONIC_GAME }}"
+          SONIC_STATE: "${{ github.event.inputs.SONIC_STATE }}"
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
           TEST_SUIT: "train_sonic_agent"
         run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
-      - name: Set environment variable for the trained Sonic agent for the artifact upload
+      - name: Set environment variable for the trained Sonic agent for the artifact upload stage
         run: |
           source setup_agent_filename_and_filepath_env.sh
           echo SONIC_AGENT_NAME=${SONIC_AGENT_NAME} >> $GITHUB_ENV
