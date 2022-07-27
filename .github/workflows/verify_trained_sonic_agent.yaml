@@ -1,6 +1,6 @@
 name: "Verify trained Sonic agent skills CI pipeline"
 
-on: push
+on:
   workflow_dispatch:
     inputs:
       SONIC_GAME:
