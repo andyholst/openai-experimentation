@@ -85,6 +85,6 @@ def test_sonic_agent(game=os.getenv('SONIC_GAME'), state=os.getenv('SONIC_STATE'
     assert dictionary_result['time'] > 0
 
     minimum_expected_score = int(os.getenv('MINIMUM_EXPECTED_SCORE', '0'))
-    maximum_expected_score = int(os.getenv('MAXIMUM_EXPECTED_SCORE', '0'))
+    maximum_expected_score = int(os.getenv('MAXIMUM_EXPECTED_SCORE', '1000'))
 
     assert minimum_expected_score <= dictionary_result['total_reward'] <= maximum_expected_score
