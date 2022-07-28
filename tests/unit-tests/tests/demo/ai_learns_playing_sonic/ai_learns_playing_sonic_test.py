@@ -50,7 +50,7 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
     agent.learn(total_timesteps=int(os.getenv('TOTAL_TIMESTEPS', '1000')))
 
     # Then
-    filename = f'sonic_agent_for_{game}_on_state_{state}_{datetime.now().strftime('%Y-%m-%dT%H_%M_%SZ')}'
+    filename = f'sonic_agent_for_{game}_on_state_{state}_{datetime.now().strftime("%Y-%m-%dT%H_%M_%SZ")}'
     filename = filename.replace('.', '_')
     filename = f'{filename}.agent'
     agent.save(filename)
