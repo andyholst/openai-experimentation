@@ -86,10 +86,11 @@ jobs:
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "tests/unit-tests"
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
-      - name: Train sonic agent for given game and level state
+      - name: Train the Sonic agent for the given game and game level
         env:
           SONIC_GAME: "${{ github.event.inputs.SONIC_GAME }}"
           SONIC_STATE: "${{ github.event.inputs.SONIC_STATE }}"
+          TOTAL_TIMESTEPS: "${{ github.event.inputs.TOTAL_TIMESTEPS }}"
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"

@@ -95,7 +95,7 @@ jobs:
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "tests/unit-tests"
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
-      - name: Run unit tests
+      - name: Run unit tests to verify trained Sonic agent(s)
         env:
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
@@ -104,4 +104,6 @@ jobs:
           SONIC_GAME: "${{ github.event.inputs.SONIC_GAME }}"
           SONIC_STATE: "${{ github.event.inputs.SONIC_STATE }}"
           SONIC_AGENT_FILE: "${{ github.event.inputs.SONIC_AGENT_FILE }}"
+          MINIMUM_EXPECTED_SCORE: "${{ github.event.inputs.MINIMUM_EXPECTED_SCORE }}"
+          MAXIMUM_EXPECTED_SCORE: "${{ github.event.inputs.MAXIMUM_EXPECTED_SCORE }}"
         run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
