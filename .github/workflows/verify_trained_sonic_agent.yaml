@@ -15,6 +15,15 @@ on:
         description: "Trained Sonic agent to use for verify expected score result."
         required: true
         default: "https://github.com/andyholst/openai-experimentation/releases/download/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_2022-07-27T22_18_09Z.agent/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_2022-07-27T22_18_09Z.agent"
+      MINIMUM_EXPECTED_SCORE:
+        description: "Minimum expected score."
+        required: true
+        default: "0"
+      MAXIMUM_EXPECTED_SCORE:
+        description: "Maximum expected score."
+        required: true
+        default: "1000"
+
 
 env:
   DOCKER_BUILDKIT: 1

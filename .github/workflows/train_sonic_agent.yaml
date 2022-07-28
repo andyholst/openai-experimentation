@@ -11,6 +11,10 @@ on:
         description: "The game level the Sonic agent will be trained on."
         required: true
         default: "GreenHillZone.Act1"
+      TOTAL_TIMESTEPS:
+        description: "Each action taken is done in a time step. Learn the policy with so many time steps as possible to choose the best action."
+        required: true
+        default: "1000"
 
 env:
   DOCKER_BUILDKIT: 1
