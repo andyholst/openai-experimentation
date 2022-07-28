@@ -47,7 +47,7 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
     agent = PPO(policy='MlpPolicy', env=environment, verbose=1)
 
     # When
-    agent.learn(total_timesteps=1000)
+    agent.learn(total_timesteps=int(os.getenv('TOTAL_TIMESTEPS', "1000")))
 
     # Then
     filename = f'sonic_agent_for_{game}_on_state_{state}_{datetime.now().strftime("%Y-%m-%dT%H_%M_%SZ")}'
@@ -83,4 +83,8 @@ def test_sonic_agent(game=os.getenv('SONIC_GAME'), state=os.getenv('SONIC_STATE'
     # Then
     assert dictionary_result
     assert dictionary_result['time'] > 0
-    assert 0 <= dictionary_result['total_reward'] < 10000
+
+    minimum_expected_score = int(os.getenv('MINIMUM_EXPECTED_SCORE', '0'))
+    maximum_expected_score = int(os.getenv('MAXIMUM_EXPECTED_SCORE', '0'))
+
+    assert minimum_expected_score <= dictionary_result['total_reward'] < maximum_expected_score
