@@ -24,7 +24,7 @@ def test_about_to_play_sonic():
 @pytest.mark.test_sonic_skills
 def test_ai_to_play_the_sonic_game():
     # Given
-    environment = retro.make(game="SonicTheHedgehog-Genesis", state="GreenHillZone.Act1")
+    environment = retro.make(game='SonicTheHedgehog-Genesis', state='GreenHillZone.Act1')
 
     # When
     dictionary_result = main(environment=environment)
@@ -47,10 +47,10 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
     agent = PPO(policy='MlpPolicy', env=environment, verbose=1)
 
     # When
-    agent.learn(total_timesteps=int(os.getenv('TOTAL_TIMESTEPS', "1000")))
+    agent.learn(total_timesteps=int(os.getenv('TOTAL_TIMESTEPS', '1000')))
 
     # Then
-    filename = f'sonic_agent_for_{game}_on_state_{state}_{datetime.now().strftime("%Y-%m-%dT%H_%M_%SZ")}'
+    filename = f'sonic_agent_for_{game}_on_state_{state}_{datetime.now().strftime('%Y-%m-%dT%H_%M_%SZ')}'
     filename = filename.replace('.', '_')
     filename = f'{filename}.agent'
     agent.save(filename)

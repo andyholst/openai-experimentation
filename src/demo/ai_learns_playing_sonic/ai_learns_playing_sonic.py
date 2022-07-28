@@ -3,13 +3,13 @@ import numpy as np
 
 
 def about_to_play_sonic():
-    return "You rock Sonic!"
+    return 'You rock Sonic!'
 
 
 def main(environment=None, agent=None, verbose=False):
     about_to_play_sonic()
     if not environment:
-        environment = retro.make(game="SonicTheHedgehog-Genesis", state="GreenHillZone.Act1")
+        environment = retro.make(game='SonicTheHedgehog-Genesis', state='GreenHillZone.Act1')
     observation = environment.reset()
     time = 0
     total_reward = 0
@@ -58,6 +58,6 @@ def set_info_content(agent, info):
     return info_content
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     print(about_to_play_sonic())
     main()
