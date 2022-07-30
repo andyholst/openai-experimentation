@@ -1,5 +1,7 @@
-import retro
+import json
 import numpy as np
+import os
+import retro
 
 
 def about_to_play_sonic():
@@ -14,9 +16,11 @@ def main(environment=None, agent=None, verbose=False):
     time = 0
     total_reward = 0
     info_content = None
+    deterministic = json.loads(os.getenv("DETERMINISTIC").lower())
+
     while True:
         if agent:
-            action, _states = agent.predict(observation, deterministic=True)
+            action, _states = agent.predict(observation, deterministic=deterministic)
         else:
             action = environment.action_space.sample()
 

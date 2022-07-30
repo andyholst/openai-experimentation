@@ -23,6 +23,10 @@ on:
         description: "Maximum expected score."
         required: true
         default: "1000"
+      DETERMINISTIC:
+        description: "Use deterministic actions by the agent."
+        required: true
+        default: "False"
 
 
 env:
@@ -101,9 +105,10 @@ jobs:
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
           TEST_SUIT: "test_sonic_agent"
+          DETERMINISTIC: "${{ github.event.inputs.DETERMINISTIC }}"
+          MAXIMUM_EXPECTED_SCORE: "${{ github.event.inputs.MAXIMUM_EXPECTED_SCORE }}"
+          MINIMUM_EXPECTED_SCORE: "${{ github.event.inputs.MINIMUM_EXPECTED_SCORE }}"
+          SONIC_AGENT_FILE: "${{ github.event.inputs.SONIC_AGENT_FILE }}"
           SONIC_GAME: "${{ github.event.inputs.SONIC_GAME }}"
           SONIC_STATE: "${{ github.event.inputs.SONIC_STATE }}"
-          SONIC_AGENT_FILE: "${{ github.event.inputs.SONIC_AGENT_FILE }}"
-          MINIMUM_EXPECTED_SCORE: "${{ github.event.inputs.MINIMUM_EXPECTED_SCORE }}"
-          MAXIMUM_EXPECTED_SCORE: "${{ github.event.inputs.MAXIMUM_EXPECTED_SCORE }}"
         run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
