@@ -1,28 +1,28 @@
 name: "Verify trained Sonic agent skills CI pipeline"
 
-on:
-  workflow_dispatch:
-    inputs:
-      SONIC_GAME:
-        description: "Sonic game to train the Sonic agent on."
-        required: true
-        default: "SonicTheHedgehog-Genesis"
-      SONIC_STATE:
-        description: "The game level the Sonic agent will be trained on."
-        required: true
-        default: "GreenHillZone.Act1"
-      SONIC_AGENT_FILE:
-        description: "Trained Sonic agent to use to verify the expected score result."
-        required: true
-        default: "https://github.com/andyholst/openai-experimentation/releases/download/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_MlpPolicy_2022-07-30T01_34_00Z.agent/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_MlpPolicy_2022-07-30T01_34_00Z.agent"
-      MINIMUM_EXPECTED_SCORE:
-        description: "Minimum expected score."
-        required: true
-        default: "0"
-      MAXIMUM_EXPECTED_SCORE:
-        description: "Maximum expected score."
-        required: true
-        default: "1000"
+on: push
+#  workflow_dispatch:
+#    inputs:
+#      SONIC_GAME:
+#        description: "Sonic game to train the Sonic agent on."
+#        required: true
+#        default: "SonicTheHedgehog-Genesis"
+#      SONIC_STATE:
+#        description: "The game level the Sonic agent will be trained on."
+#        required: true
+#        default: "GreenHillZone.Act1"
+#      SONIC_AGENT_FILE:
+#        description: "Trained Sonic agent to use to verify the expected score result."
+#        required: true
+#        default: "https://github.com/andyholst/openai-experimentation/releases/download/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_MlpPolicy_2022-07-30T01_34_00Z.agent/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_MlpPolicy_2022-07-30T01_34_00Z.agent"
+#      MINIMUM_EXPECTED_SCORE:
+#        description: "Minimum expected score."
+#        required: true
+#        default: "0"
+#      MAXIMUM_EXPECTED_SCORE:
+#        description: "Maximum expected score."
+#        required: true
+#        default: "1000"
 
 
 env:
@@ -101,9 +101,9 @@ jobs:
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
           TEST_SUIT: "test_sonic_agent"
-          SONIC_GAME: "${{ github.event.inputs.SONIC_GAME }}"
-          SONIC_STATE: "${{ github.event.inputs.SONIC_STATE }}"
-          SONIC_AGENT_FILE: "${{ github.event.inputs.SONIC_AGENT_FILE }}"
-          MINIMUM_EXPECTED_SCORE: "${{ github.event.inputs.MINIMUM_EXPECTED_SCORE }}"
-          MAXIMUM_EXPECTED_SCORE: "${{ github.event.inputs.MAXIMUM_EXPECTED_SCORE }}"
+          SONIC_GAME: "SonicTheHedgehog-Genesis"
+          SONIC_STATE: "GreenHillZone.Act1"
+          SONIC_AGENT_FILE: "https://github.com/andyholst/openai-experimentation/releases/download/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_MlpPolicy_2022-07-30T01_34_00Z.agent/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_MlpPolicy_2022-07-30T01_34_00Z.agent"
+          MINIMUM_EXPECTED_SCORE: "0"
+          MAXIMUM_EXPECTED_SCORE: "1000"
         run: "export DISPLAY=:99 && xhost + && make ${BUILD_ARGUMENT}"
