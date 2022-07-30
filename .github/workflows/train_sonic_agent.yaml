@@ -23,6 +23,10 @@ on:
         description: "Reinforcement learning policy to use"
         required: true
         default: "MlpPolicy"
+      NORMALIZED_ENVIRONMENT:
+        description: "Use an normalized environment. Can be beneficial for simpler environment."
+        required: true
+        default: "False"
 
 env:
   DOCKER_BUILDKIT: 1
@@ -101,6 +105,7 @@ jobs:
           TOTAL_TIMESTEPS: "${{ github.event.inputs.TOTAL_TIMESTEPS }}"
           RL_ALGORITHM: "${{ github.event.inputs.RL_ALGORITHM }}"
           RL_POLICY: "${{ github.event.inputs.RL_POLICY }}"
+          NORMALIZED_ENVIRONMENT: "${{ github.event.inputs.NORMALIZED_ENVIRONMENT }}"
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"

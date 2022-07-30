@@ -1,3 +1,4 @@
+import json
 import os
 import platform
 import pytest
@@ -51,8 +52,13 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
     assert game
     assert state
 
-    environment = DummyVecEnv([lambda: retro.make(game=game, state=state)])
-    environment = VecNormalize(environment, norm_obs=True, norm_reward=False, clip_obs=10.)
+    normalized_environment = json.loads(os.getenv("NORMALIZED_ENVIRONMENT").lower())
+
+    environment = retro.make(game=game, state=state)
+
+    if normalized_environment:
+        environment = DummyVecEnv([lambda: environment])
+        environment = VecNormalize(environment, norm_obs=True, norm_reward=False, clip_obs=10.)
 
     klass = globals()[os.getenv('RL_ALGORITHM')]
 
