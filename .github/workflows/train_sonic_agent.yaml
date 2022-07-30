@@ -15,6 +15,14 @@ on:
         description: "Each action taken is done in a time step. Learn the policy with so many time steps as possible to choose the best action."
         required: true
         default: "1000"
+      RL_ALGORITHM:
+        description: "Reinforcement learning algorithm to use"
+        required: true
+        default: "PPO"
+      RL_POLICY:
+        description: "Reinforcement learning policy to use"
+        required: true
+        default: "MlpPolicy"
 
 env:
   DOCKER_BUILDKIT: 1
@@ -91,6 +99,8 @@ jobs:
           SONIC_GAME: "${{ github.event.inputs.SONIC_GAME }}"
           SONIC_STATE: "${{ github.event.inputs.SONIC_STATE }}"
           TOTAL_TIMESTEPS: "${{ github.event.inputs.TOTAL_TIMESTEPS }}"
+          RL_ALGORITHM: "${{ github.event.inputs.RL_ALGORITHM }}"
+          RL_POLICY: "${{ github.event.inputs.RL_POLICY }}"
           BUILD_ARGUMENT: "unit-tests"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
