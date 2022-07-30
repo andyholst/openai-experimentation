@@ -95,7 +95,7 @@ def test_sonic_agent(game=os.getenv('SONIC_GAME'), state=os.getenv('SONIC_STATE'
 
     assert matcher
 
-    klass = globals()[matcher.group(0)]
+    klass = globals()[matcher.group(1)]
 
     agent = klass.load(path=file, env=environment, verbose=1)
 
