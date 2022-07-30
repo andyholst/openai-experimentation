@@ -16,7 +16,12 @@ def main(environment=None, agent=None, verbose=False):
     time = 0
     total_reward = 0
     info_content = None
-    deterministic = json.loads(os.getenv("DETERMINISTIC").lower())
+
+    deterministic = os.getenv('DETERMINISTIC')
+    if not deterministic:
+        deterministic = 'False'
+
+    deterministic = json.loads(deterministic.lower())
 
     while True:
         if agent:
@@ -43,7 +48,7 @@ def main(environment=None, agent=None, verbose=False):
         if reward < 0 and verbose:
             print(f'time: {time}, penalty: {reward}, current_reward: {total_reward}')
         if done:
-            # This happens both, when time and lives are up, and when game is completed
+            # This happens when time and lives are up or when game level is completed
             environment.render()
             if verbose:
                 print('done!')
