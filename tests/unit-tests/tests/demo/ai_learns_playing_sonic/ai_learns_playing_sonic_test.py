@@ -1,6 +1,7 @@
 import os
 import platform
 import pytest
+import re
 import retro
 import tempfile
 import urllib.request
@@ -11,6 +12,7 @@ from os.path import exists
 from pathlib import Path
 
 from demo.ai_learns_playing_sonic.ai_learns_playing_sonic import about_to_play_sonic, main
+
 from stable_baselines3 import (
     A2C,
     DDPG,
@@ -18,7 +20,7 @@ from stable_baselines3 import (
     PPO,
     SAC,
     TD3
-)
+)  # noqa: Needed for dynamic loading of reinforcement learning algorithm
 
 from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
 
@@ -84,11 +86,18 @@ def test_sonic_agent(game=os.getenv('SONIC_GAME'), state=os.getenv('SONIC_STATE'
     if validators.url(agent_file):
         urllib.request.urlretrieve(agent_file, file)
 
-    file = f'{path}/{filename}'
-
     environment = DummyVecEnv([lambda: retro.make(game=game, state=state)])
     environment = VecNormalize(environment, norm_obs=True, norm_reward=False, clip_obs=10.)
-    agent = PPO.load(path=file, env=environment, verbose=1)
+
+    regexp_pattern = r'\w{1,}_(\w{1,})_(\w{1,})_[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}_[0-9]{2}_[0-9]{2}Z\.agent'
+
+    matcher = re.search(regexp_pattern, filename)
+
+    assert matcher
+
+    klass = globals()[matcher.group(0)]
+
+    agent = klass.load(path=file, env=environment, verbose=1)
 
     # When
     dictionary_result = main(environment, agent)

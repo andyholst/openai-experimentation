@@ -12,7 +12,7 @@ on:
         required: true
         default: "GreenHillZone.Act1"
       SONIC_AGENT_FILE:
-        description: "Trained Sonic agent to use for verify expected score result."
+        description: "Trained Sonic agent to use to verify the expected score result."
         required: true
         default: "https://github.com/andyholst/openai-experimentation/releases/download/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_2022-07-27T22_18_09Z.agent/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_2022-07-27T22_18_09Z.agent"
       MINIMUM_EXPECTED_SCORE:
