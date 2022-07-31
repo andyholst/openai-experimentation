@@ -12,7 +12,7 @@ on: push
 #        required: true
 #        default: "gfx803\\;gfx900\\;gfx906\\;gfx908"
 #      UPLOAD_TO_ARTIFACTORY:
-#        description: "Upload ROCm PyTorch wheel file to GitHub instead of artifactory."
+#        description: "Upload ROCm PyTorch wheel file to artifactory."
 #        required: true
 #        default: "False"
 
