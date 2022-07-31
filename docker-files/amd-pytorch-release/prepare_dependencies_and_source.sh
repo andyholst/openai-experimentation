@@ -26,7 +26,7 @@ if [ ! -z "${ROCM_ARCH}" ]; then
   update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 50 || exit 1
   update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 50 || exit 1
 
-  git clone https://github.com/pytorch/pytorch || exit 1
-  cd pytorch || exit 1
+  git clone https://github.com/pytorch/pytorch /app/src/build/pytorch || exit 1
+  cd /app/src/build/pytorch || exit 1
   git submodule update --init --recursive -q || exit 1
 fi

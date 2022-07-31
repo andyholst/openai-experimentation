@@ -15,4 +15,4 @@ services:
     group_add:
       - "video"
     volumes:
-      - "../build/pytorch:/tmp/pytorch"
+      - "../build/pytorch:/app/src/build/pytorch"
