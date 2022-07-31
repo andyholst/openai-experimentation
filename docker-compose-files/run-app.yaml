@@ -5,9 +5,9 @@ services:
     image: "${APP_NAME}:${VERSION}"
     environment:
       DISPLAY: "$DISPLAY"
+      UPLOAD_TO_ARTIFACTORY: "${UPLOAD_TO_ARTIFACTORY}"
     group_add:
       - "video"
     volumes:
       - "/tmp/.X11-unix:/tmp/.X11-unix"
-      # For testing and building PyTorch and deploy it to a Python wheel artifactory repository
-      # - "../build:/usr/src"
+      - "../build/pytorch:/app/src/build/pytorch"
