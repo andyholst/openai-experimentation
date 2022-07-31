@@ -1,9 +1,10 @@
 gym-retro==0.8.*
-gym==0.21.*
+gym==0.25.*
+opencv-python==4.5.5.*
 pygame==2.1.*
+pynvml
 scikit-build
 stable-baselines3==1.5.*
 torch
-torchvision
 torchaudio
-pynvml
+torchvision
