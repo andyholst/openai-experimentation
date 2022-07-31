@@ -13,12 +13,12 @@ validate-docker-compose-files:
 	$(DOCKER_COMPOSE_BINARY) --file="${file}" config > /dev/null || exit $?;)
 
 build-app:
-	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build --force-rm --no-cache \
+	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build \
 	--build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
 	--build-arg PYPI_ROCM_REPOSITORY="${PYPI_ROCM_REPOSITORY}" \
 	--build-arg PYPI_USERNAME="${PYPI_USERNAME}" \
 	--build-arg PYPI_PASSWORD="${PYPI_PASSWORD}" \
 	--build-arg BUILDKIT_INLINE_CACHE=1
 
-run-app:
+run-app: build-app
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run app
