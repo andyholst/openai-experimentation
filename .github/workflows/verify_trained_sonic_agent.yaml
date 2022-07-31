@@ -14,7 +14,7 @@ on:
       SONIC_AGENT_FILE:
         description: "Trained Sonic agent to use to verify the expected score result."
         required: true
-        default: "https://github.com/andyholst/openai-experimentation/releases/download/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_MlpPolicy_2022-07-30T01_34_00Z.agent/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_MlpPolicy_2022-07-30T01_34_00Z.agent"
+        default: "https://github.com/andyholst/openai-experimentation/releases/download/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_CnnPolicy_2022-07-31T14_57_57Z.agent/sonic_agent_for_SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_PPO_CnnPolicy_2022-07-31T14_57_57Z.agent"
       MINIMUM_EXPECTED_SCORE:
         description: "Minimum expected score."
         required: true
