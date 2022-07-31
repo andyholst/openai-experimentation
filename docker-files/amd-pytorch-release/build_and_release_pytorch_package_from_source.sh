@@ -16,5 +16,8 @@ if [ ! -z "${ROCM_ARCH}" ]; then
   export PYTORCH_BUILD_NUMBER PYTORCH_BUILD_VERSION PYTORCH_ROCM_ARCH
 
   USE_ROCM=1 python3.7 setup.py bdist_wheel
-  python3.7 -m twine upload -r local dist/* || exit 1
+
+  if [ "${UPLOAD_TO_GITHUB}" == "False"]; then
+    python3.7 -m twine upload -r local dist/* || exit 1
+  fi
 fi

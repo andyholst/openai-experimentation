@@ -29,5 +29,5 @@ RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src
 
-RUN source $HOME/.bashrc && /tmp/prepare_dependencies_and_source.sh
-RUN source $HOME/.bashrc && /tmp/build_and_release_pytorch_package_from_source.sh
+CMD ["bash", "-c", "source $HOME/.bashrc && /tmp/prepare_dependencies_and_source.sh && \
+     /tmp/build_and_release_pytorch_package_from_source.sh"]

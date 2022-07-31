@@ -10,5 +10,9 @@ services:
     devices:
       - /dev/kfd
       - /dev/dri
+    environment:
+      UPLOAD_TO_GITHUB: "${UPLOAD_TO_GITHUB}"
     group_add:
       - "video"
+    volumes:
+      - "../build/pytorch:/tmp/pytorch"

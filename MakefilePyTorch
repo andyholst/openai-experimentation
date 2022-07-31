@@ -4,7 +4,7 @@ DOCKER_COMPOSE_BINARY := docker-compose
 DOCKER_COMPOSE_FILES := docker-compose-files
 
 DOCKER_COMPOSE_BUILD_APP_FILE := $(DOCKER_COMPOSE_FILES)/build-app.yaml
-DOCKER_COMPOSE_RUN_APP_FILE := $(DOCKER_COMPOSE_FILES)/run-app.yaml
+DOCKER_COMPOSE_RUN_APP_FILE := $(DOCKER_COMPOSE_FILES)/amd-run-app.yaml
 
 export VERSION := $(shell git rev-parse --short HEAD)
 
@@ -21,4 +21,4 @@ build-app:
 	--build-arg BUILDKIT_INLINE_CACHE=1
 
 run-app:
-	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run app bash
+	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run app
