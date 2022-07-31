@@ -73,8 +73,14 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
     agent.learn(total_timesteps=int(total_timesteps))
 
     # Then
-    filename = f'sonic_agent_for_{game}_on_state_{state}_{os.getenv("RL_ALGORITHM")}_{os.getenv("RL_POLICY")}' \
-               f'_{datetime.now().strftime("%Y-%m-%dT%H_%M_%SZ")}'
+    filename = f'sonic_agent_for_{game}_on_state_{state}_'
+
+    if normalized_environment:
+        filename += 'NORMALIZED_'
+
+    filename += f'{os.getenv("RL_ALGORITHM")}_{os.getenv("RL_POLICY")}' \
+                f'_{datetime.now().strftime("%Y-%m-%dT%H_%M_%SZ")}'
+
     filename = filename.replace('.', '_')
     filename = f'{filename}.agent'
     agent.save(filename)
@@ -95,13 +101,18 @@ def test_sonic_agent(game=os.getenv('SONIC_GAME'), state=os.getenv('SONIC_STATE'
     if validators.url(agent_file):
         urllib.request.urlretrieve(agent_file, file)
 
-    environment = retro.make(game=game, state=state)
-
     regexp_pattern = r'\w{1,}_(\w{1,})_(\w{1,})_[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}_[0-9]{2}_[0-9]{2}Z\.agent'
 
     matcher = re.search(regexp_pattern, filename)
 
     assert matcher
+
+    environment = retro.make(game=game, state=state)
+
+    if 'NORMALIZED' in filename:
+        environment = GrayScaleObservation(env=environment, keep_dim=True)
+        environment = DummyVecEnv([lambda: environment])
+        environment = VecFrameStack(venv=environment, n_stack=8, channels_order='last')
 
     klass = globals()[matcher.group(1)]
 
