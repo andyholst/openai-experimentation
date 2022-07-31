@@ -6,7 +6,7 @@ on:
       ROCM_VERSION:
         description: "What AMD ROCm GPU computation platform version to use."
         required: true
-        default: "5.2"
+        default: "5.2.1"
       ROCM_ARCH:
         description: "What ROCm GPU architecture(s) to use."
         required: true
@@ -61,13 +61,11 @@ jobs:
           UPLOAD_TO_GITHUB: "${{ github.event.inputs.UPLOAD_TO_GITHUB }}"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
       - name: Set environment variable for pytorch filename and filepath
-        if: ${{ github.event.inputs.UPLOAD_TO_GITHUB }}" == "True"
         run: |
           source setup_pytorch_rocm_filename_and_filepath_env.sh
           echo ROCM_PYTORCH_NAME=${ROCM_PYTORCH_NAME} >> $GITHUB_ENV
           echo ROCM_PYTORCH_FILE=${ROCM_PYTORCH_FILE} >> $GITHUB_ENV
       - name: Upload built ROCm PyTorch wheel file
-        if: "${{ github.event.inputs.UPLOAD_TO_GITHUB }}" == "True"
         uses: xresloader/upload-to-github-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
