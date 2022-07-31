@@ -16,12 +16,10 @@ def main(environment=None, agent=None, verbose=False):
     time = 0
     total_reward = 0
     info_content = None
-
     deterministic = os.getenv('DETERMINISTIC')
-    if not deterministic:
-        deterministic = 'False'
 
-    deterministic = json.loads(deterministic.lower())
+    if agent:
+        deterministic = json.loads(deterministic.lower())
 
     while True:
         if agent:
