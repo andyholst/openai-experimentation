@@ -22,11 +22,11 @@ on:
       RL_POLICY:
         description: "Reinforcement learning policy to use"
         required: true
-        default: "MlpPolicy"
+        default: "CnnPolicy"
       NORMALIZED_ENVIRONMENT:
         description: "Use an normalized environment. Can be beneficial for simpler environment."
         required: true
-        default: "False"
+        default: "True"
 
 env:
   DOCKER_BUILDKIT: 1

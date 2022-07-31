@@ -23,7 +23,8 @@ from stable_baselines3 import (
     TD3
 )  # noqa: Needed for dynamic loading of reinforcement learning algorithm
 
-from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
+from gym.wrappers import GrayScaleObservation
+from stable_baselines3.common.vec_env import DummyVecEnv, VecFrameStack
 
 
 @pytest.mark.test_sonic_skills
@@ -53,21 +54,23 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
     assert state
 
     normalized_environment = json.loads(os.getenv("NORMALIZED_ENVIRONMENT").lower())
-
     environment = retro.make(game=game, state=state)
 
     if normalized_environment:
+        environment = GrayScaleObservation(env=environment, keep_dim=True)
         environment = DummyVecEnv([lambda: environment])
-        environment = VecNormalize(environment, norm_obs=True, norm_reward=False, clip_obs=10.)
+        environment = VecFrameStack(venv=environment, n_stack=8, channels_order='last')
 
     klass = globals()[os.getenv('RL_ALGORITHM')]
 
     assert klass
 
-    agent = klass(policy=os.getenv('RL_POLICY'), env=environment, verbose=1)
+    agent = klass(policy=os.getenv('RL_POLICY'), env=environment, verbose=1, learning_rate=0.0000001, n_steps=2048)
+    total_timesteps = os.getenv('TOTAL_TIMESTEPS')
+    assert total_timesteps
 
     # When
-    agent.learn(total_timesteps=int(os.getenv('TOTAL_TIMESTEPS', '1000')))
+    agent.learn(total_timesteps=int(total_timesteps))
 
     # Then
     filename = f'sonic_agent_for_{game}_on_state_{state}_{os.getenv("RL_ALGORITHM")}_{os.getenv("RL_POLICY")}' \
@@ -92,8 +95,7 @@ def test_sonic_agent(game=os.getenv('SONIC_GAME'), state=os.getenv('SONIC_STATE'
     if validators.url(agent_file):
         urllib.request.urlretrieve(agent_file, file)
 
-    environment = DummyVecEnv([lambda: retro.make(game=game, state=state)])
-    environment = VecNormalize(environment, norm_obs=True, norm_reward=False, clip_obs=10.)
+    environment = retro.make(game=game, state=state)
 
     regexp_pattern = r'\w{1,}_(\w{1,})_(\w{1,})_[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}_[0-9]{2}_[0-9]{2}Z\.agent'
 

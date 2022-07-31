@@ -10,8 +10,10 @@ def about_to_play_sonic():
 
 def main(environment=None, agent=None, verbose=False):
     about_to_play_sonic()
+
     if not environment:
         environment = retro.make(game='SonicTheHedgehog-Genesis', state='GreenHillZone.Act1')
+
     observation = environment.reset()
     time = 0
     total_reward = 0
@@ -46,7 +48,7 @@ def main(environment=None, agent=None, verbose=False):
         if reward < 0 and verbose:
             print(f'time: {time}, penalty: {reward}, current_reward: {total_reward}')
         if done:
-            # This happens when time and lives are up or when game level is completed
+            # This happens when time and lives are up or when the game level is completed
             environment.render()
             if verbose:
                 print('done!')
