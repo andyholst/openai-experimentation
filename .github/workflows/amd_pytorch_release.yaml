@@ -11,10 +11,10 @@ on: push
 #        description: "What ROCm GPU architecture(s) to use."
 #        required: true
 #        default: "gfx803\\;gfx900\\;gfx906\\;gfx908"
-#      UPLOAD_TO_GITHUB:
+#      UPLOAD_TO_ARTIFACTORY:
 #        description: "Upload ROCm PyTorch wheel file to GitHub instead of artifactory."
 #        required: true
-#        default: "True"
+#        default: "False"
 
 env:
   DOCKER_BUILDKIT: 1
@@ -43,8 +43,8 @@ jobs:
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
       - name: Build Base Ubuntu 20.04 image
         env:
-          ROCM_ARCH: "${{ github.event.inputs.ROCM_ARCH }}"
-          ROCM_VERSION: "${{ github.event.inputs.ROCM_VERSION }}"
+          ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
+          ROCM_VERSION: "5.2.1"
           APP_NAME: "base-ubuntu-2004"
           BUILD_ARGUMENT: "build-app"
           SRC_APP: "docker-files/base-ubuntu-2004"
@@ -59,7 +59,7 @@ jobs:
           APP_NAME: "amd-rocm-pytorch-release"
           BUILD_ARGUMENT: "run-app"
           SRC_APP: "docker-files/amd-pytorch-release"
-          UPLOAD_TO_GITHUB: "True"
+          UPLOAD_TO_ARTIFACTORY: "False"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
       - name: Set environment variable for PyTorch filename and filepath
         run: |

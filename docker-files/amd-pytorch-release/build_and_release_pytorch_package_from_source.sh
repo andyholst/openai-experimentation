@@ -17,7 +17,7 @@ if [ ! -z "${ROCM_ARCH}" ]; then
 
   USE_ROCM=1 python3.7 setup.py bdist_wheel
 
-  if [ "${UPLOAD_TO_GITHUB}" == "False"]; then
+  if [ "${UPLOAD_TO_ARTIFACTORY}" == "True"]; then
     python3.7 -m twine upload -r local dist/* || exit 1
   fi
 fi
