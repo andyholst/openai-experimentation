@@ -65,7 +65,7 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
 
     assert klass
 
-    agent = klass(policy=os.getenv('RL_POLICY'), env=environment, verbose=1, learning_rate=0.0000001, n_steps=2048)
+    agent = klass(policy=os.getenv('RL_POLICY'), env=environment, verbose=1, learning_rate=0.000001, n_steps=2048)
     total_timesteps = os.getenv('TOTAL_TIMESTEPS')
     assert total_timesteps
 
