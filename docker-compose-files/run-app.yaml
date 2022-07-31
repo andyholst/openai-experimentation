@@ -5,7 +5,9 @@ services:
     image: "${APP_NAME}:${VERSION}"
     environment:
       DISPLAY: "$DISPLAY"
+      UPLOAD_TO_GITHUB: "${UPLOAD_TO_GITHUB}"
     group_add:
       - "video"
     volumes:
       - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "../build/pytorch:/app/src/build/pytorch"
