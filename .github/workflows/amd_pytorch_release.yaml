@@ -71,7 +71,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "${{ env.ROCM_PYTORCH_NAME }}"
-          tag_name: "${{ env.ROCM_PYTORCH_FILE }}"
+          file: "${{ env.ROCM_PYTORCH_FILE }}"
+          tag_name: "${{ env.ROCM_PYTORCH_NAME }}"
           tags: true
           draft: false
