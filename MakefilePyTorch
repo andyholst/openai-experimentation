@@ -20,5 +20,5 @@ build-app:
 	--build-arg PYPI_PASSWORD="${PYPI_PASSWORD}" \
 	--build-arg BUILDKIT_INLINE_CACHE=1
 
-run-app:
-	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run app bash
+run-app: build-app
+	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_RUN_APP_FILE) run app
