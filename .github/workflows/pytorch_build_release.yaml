@@ -1,20 +1,24 @@
-name: "Build and release PyTorch pipeline"
+name: "Build and release PyTorch pipeline test run"
 
 on:
-  workflow_dispatch:
-    inputs:
-      ROCM_VERSION:
-        description: "What AMD ROCm GPU computation platform version to use."
-        required: true
-        default: "5.2.1"
-      ROCM_ARCH:
-        description: "What ROCm GPU architecture(s) to use."
-        required: true
-        default: "gfx803\\;gfx900\\;gfx906\\;gfx908"
-      UPLOAD_TO_ARTIFACTORY:
-        description: "Upload ROCm PyTorch wheel file to artifactory."
-        required: true
-        default: "False"
+  push:
+#    inputs:
+#      ROCM_VERSION:
+#        description: "What AMD ROCm GPU computation platform version to use."
+#        required: true
+#        default: "5.2.1"
+#      ROCM_ARCH:
+#        description: "What ROCm GPU architecture(s) to use."
+#        required: true
+#        default: "gfx803\\;gfx900\\;gfx906\\;gfx908"
+#      UPLOAD_TO_ARTIFACTORY:
+#        description: "Upload ROCm PyTorch wheel file to artifactory."
+#        required: true
+#        default: "False"
+#      PROCESSING_UNIT:
+#        description: "Processing unit to use. Can be cpu or amd"
+#        required: true
+#        default: "cpu"
 
 env:
   DOCKER_BUILDKIT: 1
@@ -43,35 +47,37 @@ jobs:
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
       - name: Build Base Ubuntu 20.04 image
         env:
-          ROCM_ARCH: "${{ github.event.inputs.ROCM_ARCH }}"
-          ROCM_VERSION: "${{ github.event.inputs.ROCM_VERSION }}"
+          ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
+          ROCM_VERSION: "5.2.1"
+          PROCESSING_UNIT: "amd"
           APP_NAME: "base-ubuntu-2004"
           BUILD_ARGUMENT: "build-app"
           SRC_APP: "docker-files/base-ubuntu-2004"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
-      - name: Release ROCm PyTorch built and packaged binaries
+      - name: Release Processing PyTorch built and packaged binaries
         env:
-          ROCM_ARCH: "${{ github.event.inputs.ROCM_ARCH }}"
-          ROCM_VERSION: "${{ github.event.inputs.ROCM_VERSION }}"
+          ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
+          ROCM_VERSION: "5.2.1"
+          PROCESSING_UNIT: "amd"
           PYPI_ROCM_REPOSITORY: "${{ secrets.PYPI_ROCM_REPOSITORY }}"
           PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
           PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
-          APP_NAME: "amd-rocm-pytorch-release"
+          APP_NAME: "rocm-pytorch-release"
           BUILD_ARGUMENT: "run-app"
-          SRC_APP: "docker-files/amd-pytorch-release"
+          SRC_APP: "docker-files/pytorch-release"
           UPLOAD_TO_ARTIFACTORY: "${{ github.event.inputs.UPLOAD_TO_ARTIFACTORY }}"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
       - name: Set environment variable for PyTorch filename and filepath
         run: |
-          source setup_pytorch_rocm_filename_and_filepath_env.sh
-          echo ROCM_PYTORCH_NAME=${ROCM_PYTORCH_NAME} >> $GITHUB_ENV
-          echo ROCM_PYTORCH_FILE=${ROCM_PYTORCH_FILE} >> $GITHUB_ENV
-      - name: Upload built ROCm PyTorch wheel file to GitHub
+          source setup_pytorch_filename_and_filepath_env.sh
+          echo PYTORCH_NAME=${PYTORCH_NAME} >> $GITHUB_ENV
+          echo PYTORCH_FILE=${PYTORCH_FILE} >> $GITHUB_ENV
+      - name: Upload built PyTorch wheel file to GitHub
         uses: xresloader/upload-to-github-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "${{ env.ROCM_PYTORCH_FILE }}"
-          tag_name: "${{ env.ROCM_PYTORCH_NAME }}"
+          file: "${{ env.PYTORCH_FILE }}"
+          tag_name: "${{ env.PYTORCH_NAME }}"
           tags: true
           draft: false

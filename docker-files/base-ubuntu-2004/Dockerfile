@@ -6,9 +6,13 @@ ENV ROCM_VERSION="${ROCM_VERSION}"
 ARG ROCM_ARCH="${ROCM_ARCH}"
 ENV ROCM_ARCH="${ROCM_ARCH}"
 
+ARG PROCESSING_UNIT="${PROCESSING_UNIT}"
+ENV PROCESSING_UNIT="${PROCESSING_UNIT}"
+
 RUN dpkg --add-architecture i386
 
 RUN apt-get update
+RUN DEBIAN_FRONTEND='noninteractive' apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' upgrade
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y pkg-config build-essential \
     ffmpeg git python3-dev python3-opengl pciutils software-properties-common curl gettext-base
@@ -35,15 +39,13 @@ RUN python3.7 -m pip install pip-tools
 
 COPY install_proper_gpu_dependencies.sh /tmp/install_proper_gpu_dependencies.sh
 
-RUN sh /tmp/install_proper_gpu_dependencies.sh
+RUN sh -c "bash /tmp/install_proper_gpu_dependencies.sh"
 
 COPY generate_pytoch_arch_env.sh /tmp/generate_pytoch_arch_env.sh
 
 RUN echo "source /tmp/generate_pytoch_arch_env.sh" >> $HOME/.profile
 RUN echo "source /tmp/generate_pytoch_arch_env.sh" >> $HOME/.bashrc
 RUN echo "source /tmp/generate_pytoch_arch_env.sh" >> $HOME/.zshrc
-
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*

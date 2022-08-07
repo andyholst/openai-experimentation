@@ -15,6 +15,7 @@ validate-docker-compose-files:
 build-app:
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build \
 	--build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
+	--build-arg PROCESSING_UNIT=${PROCESSING_UNIT} \
 	--build-arg PYPI_ROCM_REPOSITORY="${PYPI_ROCM_REPOSITORY}" \
 	--build-arg PYPI_USERNAME="${PYPI_USERNAME}" \
 	--build-arg PYPI_PASSWORD="${PYPI_PASSWORD}" \
