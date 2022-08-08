@@ -49,7 +49,7 @@ jobs:
         env:
           ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
           ROCM_VERSION: "5.2.1"
-          PROCESSING_UNIT: "amd"
+          PROCESSING_UNIT: "cpu"
           APP_NAME: "base-ubuntu-2004"
           BUILD_ARGUMENT: "build-app"
           SRC_APP: "docker-files/base-ubuntu-2004"
@@ -58,7 +58,7 @@ jobs:
         env:
           ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
           ROCM_VERSION: "5.2.1"
-          PROCESSING_UNIT: "amd"
+          PROCESSING_UNIT: "cpu"
           PYPI_ROCM_REPOSITORY: "${{ secrets.PYPI_ROCM_REPOSITORY }}"
           PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
           PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
