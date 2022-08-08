@@ -20,7 +20,7 @@ RUN rm -fr /usr/src/pytorch
 
 RUN sh -c "bash /tmp/install_pytorch_dependencies.sh"
 RUN python3.7 -m pip install --requirement /tmp/requirements.txt --disable-pip-version-check
-RUN echo -e "import retro" | python3.7
+RUN sh -c "bash echo -e 'import retro' | python3.7"
 RUN ls -lh /tmp/roms
 RUN bash /tmp/import_roms.sh
 
