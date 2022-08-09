@@ -24,8 +24,8 @@ if [ -n "${ROCM_ARCH}" ] && [ "${PROCESSING_UNIT}" == "amd" ]; then
 else
   DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends clang-9
 
-  update-alternatives --install /usr/bin/gcc gcc /usr/bin/clang-9 50 || exit 1
-  update-alternatives --install /usr/bin/g++ g++ /usr/bin/clang++-9 50 || exit 1
+  update-alternatives --install /usr/bin/clang gcc /usr/bin/clang-9 50 || exit 1
+  update-alternatives --install /usr/bin/clang++ g++ /usr/bin/clang++-9 50 || exit 1
 fi
 
 update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 || exit 1
