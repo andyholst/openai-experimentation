@@ -27,6 +27,7 @@ validate-docker-compose-files:
 build-unit-tests:
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_UNIT_TEST_FILE) build \
 	--build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
+	--build-arg PROCESSING_UNIT=${PROCESSING_UNIT} \
 	--build-arg BUILDKIT_INLINE_CACHE=1 unit-tests
 
 unit-tests: build-unit-tests
@@ -45,6 +46,7 @@ integration-tests: build-integration-tests
 build-app-requirements:
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_PIP_COMPILER_FILE) build --build-arg VERSION=${VERSION} \
 	--build-arg BUILDKIT_INLINE_CACHE=1 --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
+	--build-arg PROCESSING_UNIT=${PROCESSING_UNIT} \
 	pip-compiler
 
 update-app-requirements: build-app-requirements
@@ -53,11 +55,13 @@ update-app-requirements: build-app-requirements
 build-app:
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build --force-rm --no-cache \
 	--build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
+	--build-arg PROCESSING_UNIT=${PROCESSING_UNIT} \
 	--build-arg BUILDKIT_INLINE_CACHE=1
 
 build-app-quick:
 	$(DOCKER_COMPOSE_BINARY) --file=$(DOCKER_COMPOSE_BUILD_APP_FILE) build \
 	--build-arg VERSION=${VERSION} --build-arg ROCM_ARCH=${ROCM_ARCH} --build-arg ROCM_VERSION=${ROCM_VERSION} \
+	--build-arg PROCESSING_UNIT=${PROCESSING_UNIT} \
 	--build-arg BUILDKIT_INLINE_CACHE=1
 
 amd-run-app:

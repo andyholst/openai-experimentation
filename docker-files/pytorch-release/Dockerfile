@@ -7,6 +7,9 @@ ENV ROCM_VERSION="${ROCM_VERSION}"
 ARG ROCM_ARCH="${ROCM_ARCH}"
 ENV ROCM_ARCH="${ROCM_ARCH}"
 
+ARG PROCESSING_UNIT="${PROCESSING_UNIT}"
+ENV PROCESSING_UNIT="${PROCESSING_UNIT}"
+
 ARG PYPI_ROCM_REPOSITORY="${PYPI_ROCM_REPOSITORY}"
 ENV PYPI_ROCM_REPOSITORY="${PYPI_ROCM_REPOSITORY}"
 
@@ -21,7 +24,7 @@ RUN python3.7 -m pip install twine
 COPY prepare_dependencies_and_source.sh /tmp/prepare_dependencies_and_source.sh
 COPY build_and_release_pytorch_package_from_source.sh /tmp/build_and_release_pytorch_package_from_source.sh
 COPY .pypirc /tmp/pypirc
-RUN /bin/sh -c "envsubst < /tmp/pypirc" > /root/.pypirc
+RUN sh -c "envsubst < /tmp/pypirc" > /root/.pypirc
 RUN rm /tmp/pypirc
 
 RUN apt-get clean

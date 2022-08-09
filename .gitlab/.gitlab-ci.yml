@@ -43,6 +43,7 @@ build_base_ubuntu_2004_image:
   variables:
     ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
     ROCM_VERSION: "5.2"
+    PROCESSING_UNIT: "cpu"
     APP_NAME: "base-ubuntu-2004"
     BUILD_ARGUMENT: "build-app"
     SRC_APP: "docker-files/base-ubuntu-2004"
@@ -54,8 +55,9 @@ package_and_release_pytorch_pypi_package:
   variables:
     ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
     ROCM_VERSION: "5.2"
-    APP_NAME: "amd-rocm-pytorch-release"
+    PROCESSING_UNIT: "cpu"
+    APP_NAME: "pytorch-release"
     BUILD_ARGUMENT: "build-app"
-    SRC_APP: "docker-files/amd-pytorch-release"
+    SRC_APP: "docker-files/pytorch-release"
   script:
     - make -f MakefilePyTorch ${BUILD_ARGUMENT}

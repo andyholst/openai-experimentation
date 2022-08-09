@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -z "${ROCM_ARCH}" ]; then
+if [ -n "${ROCM_ARCH}" ] && [ "${PROCESSING_UNIT}" == "amd" ]; then
   AMDGPU_VERSION=22.10.3
   ROCM_VERSION=$ROCM_VERSION
 
@@ -26,7 +26,7 @@ if [ ! -z "${ROCM_ARCH}" ]; then
   ln -s /opt/rocm/bin/rocminfo /usr/bin/rocminfo
 fi
 
-if [ ! -z "$CUDA_ARCH" ]; then
+if [ -n "$CUDA_ARCH" ] && [ "${PROCESSING_UNIT}" == "nvidia" ]; then
   apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub || exit 1
   wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin || exit 1
   mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600 || exit 1

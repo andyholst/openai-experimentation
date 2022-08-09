@@ -7,6 +7,9 @@ ENV ROCM_VERSION="${ROCM_VERSION}"
 ARG ROCM_ARCH="${ROCM_ARCH}"
 ENV ROCM_ARCH="${ROCM_ARCH}"
 
+ARG PROCESSING_UNIT="${PROCESSING_UNIT}"
+ENV PROCESSING_UNIT="${PROCESSING_UNIT}"
+
 WORKDIR "/usr/src/app"
 
 COPY install_proper_gpu_pip_dependencies.sh /tmp/install_proper_gpu_pip_dependencies.sh
