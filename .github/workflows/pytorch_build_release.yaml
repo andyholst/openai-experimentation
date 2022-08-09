@@ -1,4 +1,4 @@
-name: "Build and release PyTorch pipeline test run"
+name: "Build and release PyTorch pipeline"
 
 on:
   workflow_dispatch:
