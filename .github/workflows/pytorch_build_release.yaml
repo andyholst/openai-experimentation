@@ -60,7 +60,7 @@ jobs:
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
       - name: Release specific built and packaged PyTorch binaries
         env:
-          APP_NAME: "rocm-pytorch-release"
+          APP_NAME: "pytorch-release"
           BUILD_ARGUMENT: "run-app"
           SRC_APP: "docker-files/pytorch-release"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
