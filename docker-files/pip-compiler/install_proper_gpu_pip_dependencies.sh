@@ -17,8 +17,8 @@ if [ -n "${ROCM_ARCH}" ]; then
       uri="https://github.com"
       echo "${uri}${torch_file}" >> "${IN_REQUIREMENTS}"
     fi
-elif [ -n ${CUDA_ARCH} ]; then
-  CUDA_VERSION="$(nvcc --version | grep "release" | awk '{print $6}' | cut -c2-)" || exit 1
+elif [ ! -z ${CUDA_ARCH} ]; then
+  CUDA_VERSION="$(nvcc --version | grep "release" | awk '{print $6}' | cut -c2- || exit 1)"
   if [ $CUDA_VERSION >= "11.3" ]; then
     EXTRA_INDEX_URL="--pre --extra-index-url https://download.pytorch.org/whl/cu113"
   else
@@ -30,6 +30,7 @@ if [ -z "$EXTRA_INDEX_URL" ]; then
     if [ "${PYPI_PLACE}" == "artifactory" ]; then
       EXTRA_INDEX_URL="--extra-index-url https://download.pytorch.org/whl/cpu"
     else
+      sed -i '/torch.*/d' "${IN_REQUIREMENTS}"
       uri="https://github.com/andyholst/openai-experimentation/releases"
       torch_file=$(curl $uri | grep -o '<a .*href=.*>' | sed -e 's/<a /\n<a /g' | sed -e 's/<a .*href=['"'"'"]//' -e 's/["'"'"'].*$//' -e '/^$/ d' | grep -i releases/download/torch | grep -i "cpu" | head -1)
       uri="https://github.com"
