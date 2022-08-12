@@ -3,7 +3,7 @@
 EXTRA_INDEX_URL=""
 IN_REQUIREMENTS=$1
 
-if [ -n "${ROCM_ARCH}" ]; then
+if [ ! -z "${ROCM_ARCH}" ]; then
     sed -i '/torch.*/d' "${IN_REQUIREMENTS}"
     if [ "${PYPI_PLACE}" == "artifactory" ]; then
     uri="https://${PYPI_USERNAME}:${PYPI_PASSWORD}@docondee.jfrog.io/artifactory/api/pypi/docondee-rocm-pypi/simple"
