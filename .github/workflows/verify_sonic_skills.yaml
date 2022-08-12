@@ -5,6 +5,9 @@ on: push
 env:
   DOCKER_BUILDKIT: 1
   COMPOSE_DOCKER_CLI_BUILD: 1
+  PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
+  PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
+  PYPI_PLACE: "github"
 
 jobs:
   build:
@@ -51,8 +54,6 @@ jobs:
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "docker-files/openai-environment"
-          PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
-          PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Build OpenAI environment
         env:
