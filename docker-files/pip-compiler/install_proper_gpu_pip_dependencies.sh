@@ -17,8 +17,8 @@ if [ -n "${ROCM_ARCH}" ]; then
       uri="https://github.com"
       echo "${uri}${torch_file}" >> "${IN_REQUIREMENTS}"
     fi
-elif [ -n $CUDA_ARCH ]; then
-  CUDA_VERSION="$(nvcc --version | grep "release" | awk '{print $6}' | cut -c2-)"
+elif [ -n ${CUDA_ARCH} ]; then
+  CUDA_VERSION="$(nvcc --version | grep "release" | awk '{print $6}' | cut -c2-)" || exit 1
   if [ $CUDA_VERSION >= "11.3" ]; then
     EXTRA_INDEX_URL="--pre --extra-index-url https://download.pytorch.org/whl/cu113"
   else
