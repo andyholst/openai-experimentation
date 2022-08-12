@@ -33,7 +33,6 @@ env:
   COMPOSE_DOCKER_CLI_BUILD: 1
   PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
   PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
-  PYPI_PLACE: "github"
 
 jobs:
   build:
