@@ -26,6 +26,7 @@ services:
     volumes:
       - "../${SRC_APP}:/usr/src/unit-tests/${SRC_APP}"
       - "../tests/unit-tests:/usr/src/unit-tests"
+      - "../model:/usr/src/unit-tests/model"
       - "/tmp/.X11-unix:/tmp/.X11-unix"
     command: >
       pytest --cov=src --cov-config=coverage.cfg --cov-report=term-missing -m "${TEST_SUIT}"

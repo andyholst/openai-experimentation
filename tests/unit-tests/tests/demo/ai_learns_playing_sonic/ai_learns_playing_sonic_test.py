@@ -12,6 +12,7 @@ from datetime import datetime
 from os.path import exists
 from pathlib import Path
 
+from demo.ai_learns_playing_sonic import TrainLogCallback
 from demo.ai_learns_playing_sonic.ai_learns_playing_sonic import about_to_play_sonic, main
 
 from stable_baselines3 import (
@@ -65,26 +66,38 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
 
     assert klass
 
-    agent = klass(policy=os.getenv('RL_POLICY'), env=environment, verbose=1, learning_rate=0.000001, n_steps=2048)
-    total_timesteps = os.getenv('TOTAL_TIMESTEPS')
-    assert total_timesteps
-
-    # When
-    agent.learn(total_timesteps=int(total_timesteps))
-
-    # Then
     filename = f'sonic_agent_for_{game}_on_state_{state}_'
 
     if normalized_environment:
         filename += 'NORMALIZED_'
 
-    filename += f'{os.getenv("RL_ALGORITHM")}_{os.getenv("RL_POLICY")}' \
-                f'_{datetime.now().strftime("%Y-%m-%dT%H_%M_%SZ")}'
-
+    filename += f'{os.getenv("RL_ALGORITHM")}_{os.getenv("RL_POLICY")}'
     filename = filename.replace('.', '_')
-    filename = f'{filename}.agent'
-    agent.save(filename)
 
+    checkpoint_dir = os.getenv('CHECKPOINT_DIR', './model/train/')
+    log_dir = os.getenv('LOG_DIR', '/.model/logs/')
+
+    agent_callback = TrainLogCallback(check_freq=10000, save_path=checkpoint_dir, filename=filename)
+
+    agent = klass(
+        policy=os.getenv('RL_POLICY'),
+        tensorboard_log=log_dir,
+        env=environment,
+        verbose=1,
+        learning_rate=0.000001,
+        n_steps=2048)
+
+    total_timesteps = os.getenv('TOTAL_TIMESTEPS')
+    assert total_timesteps
+
+    # When
+    agent.learn(total_timesteps=int(total_timesteps), callback=agent_callback)
+
+    # Then
+    filename += f'_{datetime.now().strftime("%Y-%m-%dT%H_%M_%SZ")}'
+    filename = f'{filename}.agent'
+
+    agent.save(filename)
     assert exists(filename)
 
 
