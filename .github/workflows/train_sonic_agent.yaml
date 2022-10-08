@@ -76,6 +76,7 @@ jobs:
         run: "make ${BUILD_ARGUMENT}"
       - name: Update OpenAI Python dependencies
         env:
+          APP_NAME: "openai"
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "docker-files/openai-environment"
@@ -88,12 +89,14 @@ jobs:
         run: "make ${BUILD_ARGUMENT}"
       - name: Update ai-learns-playing-sonic Python dependencies
         env:
+          APP_NAME: ""
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "src/demo"
         run: "rm ${SRC_APP}/requirements.txt && make ${BUILD_ARGUMENT}"
       - name: Update unit tests Python dependencies
         env:
+          APP_NAME: ""
           BUILD_ARGUMENT: "update-app-requirements"
           IN_REQUIREMENTS: "requirements.in"
           SRC_APP: "tests/unit-tests"

@@ -7,5 +7,6 @@ services:
     environment:
       IN_REQUIREMENTS: "${IN_REQUIREMENTS:-requirements.in}"
       SRC_APP: "${SRC_APP}"
+      APP_NAME: "${APP_NAME:-}"
     volumes:
       - "../${SRC_APP}:/usr/src/app"
