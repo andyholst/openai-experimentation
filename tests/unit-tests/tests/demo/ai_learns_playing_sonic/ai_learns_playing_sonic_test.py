@@ -45,7 +45,7 @@ def test_ai_to_play_the_sonic_game():
     # Then
     assert dictionary_result
     assert dictionary_result['time'] > 0
-    assert 100 < dictionary_result['total_reward'] <= 300
+    assert 100 <= dictionary_result['total_reward'] <= 300
 
 
 @pytest.mark.train_sonic_agent
