@@ -12,7 +12,7 @@ from datetime import datetime
 from os.path import exists
 from pathlib import Path
 
-from demo.ai_learns_playing_sonic import TrainLogCallback
+from demo.ai_learns_playing_sonic.train_log_callback import TrainLogCallback
 from demo.ai_learns_playing_sonic.ai_learns_playing_sonic import about_to_play_sonic, main
 
 from stable_baselines3 import (
