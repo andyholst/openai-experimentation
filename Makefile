@@ -80,8 +80,8 @@ run-app: clear-containers
 run-app-cli: clear-containers
 	@$(DOCKER_COMPOSE_BINARY) $(DOCKER_COMPOSE_RUN_APP_FILE) run --rm -it --tty app /bin/bash
 
-clear-containers: $(DOCKER_COMPOSE_BINARY) stop-containers
-	$(DOCKER_COMPOSE_CLI) ${ALL_SERVICES} rm --force
+clear-containers: stop-containers
+	$(DOCKER_COMPOSE_BINARY) ${ALL_SERVICES} rm --force
 
-stop-containers: $(DOCKER_COMPOSE_BINARY)
-	$(DOCKER_COMPOSE_CLI) ${ALL_SERVICES} down --volumes --remove-orphans
+stop-containers:
+	$(DOCKER_COMPOSE_BINARY) ${ALL_SERVICES} down --volumes --remove-orphans
