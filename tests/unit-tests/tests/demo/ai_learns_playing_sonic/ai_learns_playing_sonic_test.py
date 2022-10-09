@@ -10,7 +10,7 @@ import urllib.request
 import validators
 
 from datetime import datetime
-from os.path import exists
+from os.path import exists, isfile
 from pathlib import Path
 
 from demo.ai_learns_playing_sonic.ai_learns_playing_sonic import about_to_play_sonic, main
@@ -100,7 +100,12 @@ def test_train_ai_to_be_better_at_playing_the_sonic_game(game=os.getenv('SONIC_G
 
     agent.save(filename)
     shutil.copyfile(filename, f'{checkpoint_dir}{filename}')
+
     assert exists(filename)
+    assert isfile(filename)
+
+    assert exists(f'{checkpoint_dir}{filename}')
+    assert isfile(f'{checkpoint_dir}{filename}')
 
 
 @pytest.mark.test_sonic_agent
