@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -n "${ROCM_ARCH}" ] && [ "${PROCESSING_UNIT}" == "amd" ]; then
-  AMDGPU_VERSION=22.10.3
+  AMDGPU_VERSION=22.10.4
   ROCM_VERSION=$ROCM_VERSION
 
   echo "export AMDGPU_VERSION=$AMDGPU_VERSION" >> $HOME/.profile

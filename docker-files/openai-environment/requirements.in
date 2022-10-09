@@ -5,6 +5,7 @@ pygame==2.1.*
 pynvml
 scikit-build
 stable-baselines3==1.5.*
+importlib-metadata==4.13.0
 torch
 torchaudio
 torchvision
