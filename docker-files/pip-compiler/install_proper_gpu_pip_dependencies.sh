@@ -49,6 +49,7 @@ if [ "${APP_NAME}" = "openai" ]; then
         uri="https://github.com/andyholst/openai-experimentation/releases/download/"
 
         echo "${uri}${torch_link_path}/${torch_file}" >> "${IN_REQUIREMENTS}"
+        echo "tensorboard" >> "${IN_REQUIREMENTS}"
       fi
   fi
 fi
