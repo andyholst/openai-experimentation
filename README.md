@@ -7,3 +7,11 @@
 
 A repository to experiment with machine learning projects in a IOC container context mainly in Python and with the
 PyTorch machine learning framework. Experimenting with retro games like Sonic the Hedgehog.
+
+## Training Sonic game levels
+
+### SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_NORMALIZED_PPO_CnnPolicy
+
+#### Neural network depth: 2048, learning rate: 0.000001
+
+CPU: 3d 18h 43m 9s
