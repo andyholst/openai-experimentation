@@ -8,7 +8,7 @@
 A repository to experiment with machine learning projects in a IOC container context mainly in Python and with the
 PyTorch machine learning framework. Experimenting with retro games like Sonic the Hedgehog.
 
-## Training Sonic game levels
+## Trained Sonic agent for specific game levels
 
 ### SonicTheHedgehog-Genesis_on_state_GreenHillZone_Act1_NORMALIZED_PPO_CnnPolicy
 
