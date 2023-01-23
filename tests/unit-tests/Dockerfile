@@ -1,5 +1,5 @@
 ARG VERSION="${VERSION}"
-FROM base-ubuntu-2004:${VERSION} as builder
+FROM base-ubuntu-2204:${VERSION} as builder
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip wheel --requirement /tmp/requirements.txt \

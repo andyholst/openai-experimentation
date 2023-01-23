@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -n "${ROCM_ARCH}" ] && [ "${PROCESSING_UNIT}" == "amd" ]; then
-  AMDGPU_VERSION=22.10.4
+  AMDGPU_VERSION=$ROCM_VERSION
   ROCM_VERSION=$ROCM_VERSION
 
   echo "export AMDGPU_VERSION=$AMDGPU_VERSION" >> $HOME/.profile
@@ -12,7 +12,9 @@ if [ -n "${ROCM_ARCH}" ] && [ "${PROCESSING_UNIT}" == "amd" ]; then
   echo "export ROCM_VERSION=$ROCM_VERSION" >> $HOME/.bashrc
   echo "export ROCM_VERSION=$ROCM_VERSION" >> $HOME/.zshrc
 
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libstdc++-7-dev libgcc-7-dev || exit 1
+  echo deb [arch=amd64] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-15 main > /etc/apt/sources.list.d/llvm.list
+
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libstdc++-9-dev libgcc-9-dev || exit 1
 
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl gnupg || exit 1
   curl -sL http://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - || exit 1

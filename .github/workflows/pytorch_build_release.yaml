@@ -21,8 +21,8 @@ on:
         default: "cpu"
 
 env:
-  DOCKER_BUILDKIT: 1
-  COMPOSE_DOCKER_CLI_BUILD: 1
+  DOCKER_BUILDKIT: 0
+  COMPOSE_DOCKER_CLI_BUILD: 0
   PROCESSING_UNIT: "${{ github.event.inputs.PROCESSING_UNIT }}"
   PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
   PYPI_ROCM_REPOSITORY: "${{ secrets.PYPI_ROCM_REPOSITORY }}"
@@ -52,11 +52,11 @@ jobs:
           BUILD_ARGUMENT: "validate-docker-compose-files"
           SRC_APP: "src/demo"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
-      - name: Build Base Ubuntu 20.04 image
+      - name: Build Base Ubuntu 22.04 image
         env:
-          APP_NAME: "base-ubuntu-2004"
+          APP_NAME: "base-ubuntu-2204"
           BUILD_ARGUMENT: "build-app"
-          SRC_APP: "docker-files/base-ubuntu-2004"
+          SRC_APP: "docker-files/base-ubuntu-2204"
         run: "make -f MakefilePyTorch ${BUILD_ARGUMENT}"
       - name: Release specific built and packaged PyTorch binaries
         env:

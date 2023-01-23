@@ -44,9 +44,9 @@ build_base_ubuntu_2004_image:
     ROCM_ARCH: "gfx803\\;gfx900\\;gfx906\\;gfx908"
     ROCM_VERSION: "5.2"
     PROCESSING_UNIT: "cpu"
-    APP_NAME: "base-ubuntu-2004"
+    APP_NAME: "base-ubuntu-2204"
     BUILD_ARGUMENT: "build-app"
-    SRC_APP: "docker-files/base-ubuntu-2004"
+    SRC_APP: "docker-files/base-ubuntu-2204"
   script:
     - make -f MakefilePyTorch ${BUILD_ARGUMENT}
 

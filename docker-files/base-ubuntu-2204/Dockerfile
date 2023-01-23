@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ARG ROCM_VERSION="${ROCM_VERSION}"
 ENV ROCM_VERSION="${ROCM_VERSION}"
@@ -15,7 +15,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND='noninteractive' apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' upgrade
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y pkg-config build-essential \
-    ffmpeg git python3-dev python3-opengl pciutils software-properties-common curl gettext-base
+    ffmpeg git python3-dev python3-opengl pciutils software-properties-common curl gettext-base gpg wget
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6AF7F09730B3F0A4
 
